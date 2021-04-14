@@ -29,8 +29,7 @@ public enum ConnectionPool {
 
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             try {
-                System.out.println('1');
-                freeConnections.add(new ProxyConnectionPool(DriverManager.getConnection("jdbc:mysql://localhost:3306/admission_prefinal?" +
+                freeConnections.add(new ProxyConnectionPool(DriverManager.getConnection("jdbc:mysql://localhost:3306/admission?" +
                                 "useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
                         "root","5tHyu3a90Jh_q")));
             } catch (SQLException throwables) {
@@ -42,7 +41,6 @@ public enum ConnectionPool {
 
     public Connection getConnection(){
         ProxyConnectionPool connection=null;
-
         try {
             connection=freeConnections.take();
             givenAwayConnections.offer(connection);
@@ -55,9 +53,9 @@ public enum ConnectionPool {
     public void releaseConnection(Connection connection){
         if(connection.getClass().equals(ProxyConnectionPool.class)){
             givenAwayConnections.remove(connection);
-            freeConnections.offer((ProxyConnectionPool) connection);//ebanytsa
+            freeConnections.offer((ProxyConnectionPool) connection);
         }
-        else try { ///pizdets
+        else try {
             throw new SQLException();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -67,7 +65,7 @@ public enum ConnectionPool {
     public void destroyPool(){
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             try {
-                freeConnections.take().close();
+                freeConnections.take().reallyClose();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             } catch (InterruptedException e) {
