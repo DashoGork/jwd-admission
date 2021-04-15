@@ -7,10 +7,13 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public enum ConnectionPool {
     INSTANCE;
 
+    private static final Logger logger = LogManager.getLogger();
     private ConnectionPool connectionPool;
     private BlockingQueue<ProxyConnectionPool> freeConnections;
     private Queue<ProxyConnectionPool> givenAwayConnections;
@@ -21,7 +24,7 @@ public enum ConnectionPool {
         try {
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            LogManager.getLogger().error(throwables);
         }
 
         freeConnections=new LinkedBlockingDeque<>(DEFAULT_POOL_SIZE);
@@ -33,7 +36,7 @@ public enum ConnectionPool {
                                 "useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
                         "root","5tHyu3a90Jh_q")));
             } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                LogManager.getLogger().error(throwables);
             }
         }
     }
@@ -45,7 +48,7 @@ public enum ConnectionPool {
             connection=freeConnections.take();
             givenAwayConnections.offer(connection);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
         return connection;
     }
@@ -58,7 +61,7 @@ public enum ConnectionPool {
         else try {
             throw new SQLException();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            logger.error(throwables);
         }
     }
 
@@ -67,9 +70,9 @@ public enum ConnectionPool {
             try {
                 freeConnections.take().reallyClose();
             } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                logger.error(throwables);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                logger.error(e);
             }
 
         }
@@ -81,7 +84,7 @@ public enum ConnectionPool {
             try {
                 DriverManager.deregisterDriver(driver);
             } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                logger.error(throwables);
             }
         });
     }
