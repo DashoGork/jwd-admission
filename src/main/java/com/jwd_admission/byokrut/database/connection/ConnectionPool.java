@@ -15,10 +15,10 @@ public enum ConnectionPool {
 
     private static final Logger logger = LogManager.getLogger();
     private ConnectionPool connectionPool;
-    private BlockingQueue<ProxyConnectionPool> freeConnections;
-    private Queue<ProxyConnectionPool> givenAwayConnections;
+    private BlockingQueue<ProxyConnection> freeConnections;
+    private Queue<ProxyConnection> givenAwayConnections;
 
-    private final static int DEFAULT_POOL_SIZE=32;
+    private final static int DEFAULT_POOL_SIZE = 32;
 
     {
         try {
@@ -32,7 +32,7 @@ public enum ConnectionPool {
 
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             try {
-                freeConnections.add(new ProxyConnectionPool(DriverManager.getConnection("jdbc:mysql://localhost:3306/admission?" +
+                freeConnections.add(new ProxyConnection(DriverManager.getConnection("jdbc:mysql://localhost:3306/admission?" +
                                 "useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
                         "root","5tHyu3a90Jh_q")));
             } catch (SQLException throwables) {
@@ -42,8 +42,8 @@ public enum ConnectionPool {
     }
 
 
-    public Connection getConnection(){
-        ProxyConnectionPool connection=null;
+    public ProxyConnection getConnection(){
+        ProxyConnection connection=null;
         try {
             connection=freeConnections.take();
             givenAwayConnections.offer(connection);
@@ -54,9 +54,9 @@ public enum ConnectionPool {
     }
 
     public void releaseConnection(Connection connection){
-        if(connection.getClass().equals(ProxyConnectionPool.class)){
+        if(connection.getClass().equals(ProxyConnection.class)){
             givenAwayConnections.remove(connection);
-            freeConnections.offer((ProxyConnectionPool) connection);
+            freeConnections.offer((ProxyConnection) connection);
         }
         else try {
             throw new SQLException();
@@ -68,7 +68,7 @@ public enum ConnectionPool {
     public void destroyPool(){
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             try {
-                freeConnections.take().reallyClose();
+                freeConnections.take().hardClose();
             } catch (SQLException throwables) {
                 logger.error(throwables);
             } catch (InterruptedException e) {

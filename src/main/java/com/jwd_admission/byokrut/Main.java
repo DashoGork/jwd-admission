@@ -1,7 +1,6 @@
 package com.jwd_admission.byokrut;
 
 import com.jwd_admission.byokrut.database.connection.ConnectionPool;
-import com.jwd_admission.byokrut.database.connection.ProxyConnectionPool;
 
 import java.sql.Connection;
 import java.sql.SQLException;
