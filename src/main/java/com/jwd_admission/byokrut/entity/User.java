@@ -96,13 +96,13 @@ public class User extends Entity {
             return this;
         }
 
-        public User build(){
-            return user;
-        }
-
         public Builder setInfId(int id){
             user.infId=id;
             return this;
+        }
+
+        public User build(){
+            return user;
         }
     }
 }
