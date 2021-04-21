@@ -5,6 +5,6 @@ import com.jwd_admission.byokrut.entity.User;
 import java.util.List;
 
 public interface UserDao extends BaseDao<Integer, User> {
-    List<User> findUserByLastName(String stringpattern);
+
 }
 

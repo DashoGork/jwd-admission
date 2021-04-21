@@ -49,6 +49,43 @@ public class User extends Entity {
         return infId;
     }
 
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setPassportId(String passportId) {
+        this.passportId = passportId;
+    }
+
+    public void setInfId(int infId) {
+        this.infId = infId;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+
     public static class Builder{
         private User user;
 
