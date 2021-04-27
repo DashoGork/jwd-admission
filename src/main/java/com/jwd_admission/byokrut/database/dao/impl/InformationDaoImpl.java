@@ -33,7 +33,23 @@ public class InformationDaoImpl implements InformationDao {
 
     @Override
     public User findEntityById(Integer id) {
-        return null;
+        User user=null;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_INF_BY_ID);) {
+            preparedStatement.setInt(1,id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                String name=rs.getString("name");
+                String middlename=rs.getString("middlename");
+                String lastname=rs.getString("lastname");
+                String passportId=rs.getString("passport_id");
+                Integer infId=rs.getInt("id");
+                user= new User(name,middlename,lastname,passportId,infId);
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+        }
+        return user;
     }
 
     @Override
@@ -48,8 +64,7 @@ public class InformationDaoImpl implements InformationDao {
                     String lastname=rs.getString("lastname");
                     String passportId=rs.getString("passport_id");
                     Integer infId=rs.getInt("id");
-                    users.add(new User.Builder().setFirstName(name).setInfId(infId)
-                            .setMiddleName(middlename).setLastName(lastname).setPassportId(passportId).build());
+                    users.add( new User(name,middlename,lastname,passportId,infId));
             }
         } catch (SQLException e) {
             logger.error(e);

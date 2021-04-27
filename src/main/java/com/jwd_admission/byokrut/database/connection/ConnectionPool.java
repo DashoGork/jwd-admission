@@ -20,7 +20,7 @@ public enum ConnectionPool {
     private BlockingQueue<ProxyConnection> freeConnections;
     private Queue<ProxyConnection> givenAwayConnections;
 
-    private final static int DEFAULT_POOL_SIZE = 32;//PropertyReaderUtil.getDefPoolSize();
+    private final int DEFAULT_POOL_SIZE = PropertyReaderUtil.getDefPoolSize();
 
     {
         try {

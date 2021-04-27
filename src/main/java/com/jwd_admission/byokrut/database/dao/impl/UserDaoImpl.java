@@ -50,10 +50,7 @@ public class UserDaoImpl  implements UserDao {
             while (rs.next()) {
                 String login = rs.getString("login");
                 String password = rs.getString("password");
-                user = new User.Builder().setLogin(login).
-                        setPassword(password).
-                        setId(id).
-                        build();
+                user = new User(id,login,password);
             }
         } catch (SQLException e) {
             logger.error(e);
@@ -72,8 +69,7 @@ public class UserDaoImpl  implements UserDao {
                 int infId = rs.getInt("information_id");
                 String login = rs.getString("login");
                 String password = rs.getString("password");
-                users.add(new User.Builder().setLogin(login).setPassword(password).
-                        setId(id).build());
+                users.add(new User(id,login,password));
             }
         } catch (SQLException e) {
             logger.error(e);

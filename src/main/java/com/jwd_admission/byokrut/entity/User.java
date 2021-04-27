@@ -1,5 +1,7 @@
 package com.jwd_admission.byokrut.entity;
 
+import java.util.Objects;
+
 public class User extends Entity {
     private int id;
     private String login;
@@ -11,7 +13,21 @@ public class User extends Entity {
     private String passportId;
     private int infId;
 
-    private User(){}
+    public User(){}
+
+    public User(String firstName, String middleName, String lastName, String passportId, int infId) {
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.passportId = passportId;
+        this.infId = infId;
+    }
+
+    public User(int id, String login, String password) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+    }
 
     public int getId() {
         return id;
@@ -86,60 +102,32 @@ public class User extends Entity {
     }
 
 
-    public static class Builder{
-        private User user;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && roleId == user.roleId && infId == user.infId && Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(middleName, user.middleName) && Objects.equals(lastName, user.lastName) && Objects.equals(passportId, user.passportId);
+    }
 
-        public Builder() {
-            user = new User();
-        }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, login, password, roleId, firstName, middleName, lastName, passportId, infId);
+    }
 
-        public Builder setId(int id){
-            user.id=id;
-            return this;
-        }
-
-        public Builder setLogin(String login){
-            user.login=login;
-            return this;
-        }
-
-        public Builder setPassword(String password){
-            user.password=password;
-            return this;
-        }
-
-        public Builder setRoleId(int id){
-            user.roleId=id;
-            return this;
-        }
-
-        public Builder setFirstName(String name){
-            user.firstName=name;
-            return this;
-        }
-
-        public Builder setMiddleName(String middleName){
-            user.middleName=middleName;
-            return this;
-        }
-
-        public Builder setLastName(String lastName){
-            user.lastName=lastName;
-            return this;
-        }
-
-        public Builder setPassportId(String passportId){
-            user.passportId=passportId;
-            return this;
-        }
-
-        public Builder setInfId(int id){
-            user.infId=id;
-            return this;
-        }
-
-        public User build(){
-            return user;
-        }
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", roleId=" + roleId +
+                ", firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", passportId='" + passportId + '\'' +
+                ", infId=" + infId +
+                '}';
     }
 }
+
