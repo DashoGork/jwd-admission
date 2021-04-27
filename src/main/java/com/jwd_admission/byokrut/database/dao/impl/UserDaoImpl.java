@@ -50,10 +50,7 @@ public class UserDaoImpl  implements UserDao {
             while (rs.next()) {
                 String login = rs.getString("login");
                 String password = rs.getString("password");
-                user = new User.Builder().setLogin(login).
-                        setPassword(password).
-                        setId(id).
-                        build();
+                user = new User(id,login,password);
             }
         } catch (SQLException e) {
             logger.error(e);
@@ -65,30 +62,14 @@ public class UserDaoImpl  implements UserDao {
     public List<User> findAll() {
         List < User > users = new ArrayList< >();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS);
-             PreparedStatement preparedStatement1=connection.prepareStatement(SELECT_ALL_INF_BY_ID);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS);) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
                 int infId = rs.getInt("information_id");
                 String login = rs.getString("login");
                 String password = rs.getString("password");
-                preparedStatement1.setInt(1,infId);
-                ResultSet resultSet=preparedStatement1.executeQuery();
-                while(resultSet.next()){
-                    String name=resultSet.getString("name");
-                    String middlename=resultSet.getString("middlename");
-                    String lastname=resultSet.getString("lastname");
-                    String passportId=resultSet.getString("passport_id");
-                    users.add(new User.Builder().setLogin(login).
-                            setPassword(password).
-                            setId(id).
-                            setFirstName(name).
-                            setMiddleName(middlename).
-                            setLastName(lastname).
-                            setPassportId(passportId).
-                            build());
-                }
+                users.add(new User(id,login,password));
             }
         } catch (SQLException e) {
             logger.error(e);
@@ -128,7 +109,7 @@ public class UserDaoImpl  implements UserDao {
              PreparedStatement statement = connection.prepareStatement(CREATE_USER);) {
             statement.setString(1,user.getLogin());
             statement.setString(2,user.getPassword());
-            statement.setInt(3,findUserInformationIdByPassportId(user));
+            statement.setInt(3,user.getInfId());
             statement.executeUpdate();
             return true;
         } catch (SQLException throwables) {
@@ -137,28 +118,8 @@ public class UserDaoImpl  implements UserDao {
         return false;
     }
 
-    public boolean createUserInf(User user){
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(CREATE_USER_INF);){
-            statement.setString(1,user.getFirstName());
-            statement.setString(2,user.getMiddleName());
-            statement.setString(3,user.getLastName());
-            statement.setString(4,user.getPassportId());
-            statement.executeUpdate();
-            return true;
-        }catch (SQLException throwables) {
-            logger.error(throwables);
-        }
-        return false;
-    }
-
     @Override
     public User update(User user) {
-        return null;
-    }
-
-    @Override
-    public List<User> findUserByLastName(String stringpattern) {
         return null;
     }
 
@@ -188,20 +149,6 @@ public class UserDaoImpl  implements UserDao {
         } catch (SQLException throwables) {
             logger.error(throwables);
 
-        }
-        return -1;
-    }
-
-    public int findUserInformationIdByPassportId(User user){
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SELECT_INFORMATION_ID_BY_PASSPORT_ID);){
-            statement.setString(1,user.getPassportId());
-            statement.execute();
-            ResultSet resultSet=statement.getResultSet();
-            if( resultSet.next()) return resultSet.getInt("id");
-            else return -1;
-        } catch (SQLException throwables) {
-            logger.error(throwables);
         }
         return -1;
     }
@@ -239,11 +186,6 @@ public class UserDaoImpl  implements UserDao {
 
     public boolean UserExist(User user){
         if(findUserId(user)!=-1) return true;
-        else return false;
-    }
-
-    public boolean UserInfExist(User user){
-        if(findUserInformationIdByPassportId(user)!=-1) return true;
         else return false;
     }
 }

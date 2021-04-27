@@ -7,6 +7,8 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
+
+import com.jwd_admission.byokrut.util.PropertyReaderUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,7 +20,7 @@ public enum ConnectionPool {
     private BlockingQueue<ProxyConnection> freeConnections;
     private Queue<ProxyConnection> givenAwayConnections;
 
-    private final static int DEFAULT_POOL_SIZE = 32;
+    private final int DEFAULT_POOL_SIZE = PropertyReaderUtil.getDefPoolSize();
 
     {
         try {
@@ -32,9 +34,8 @@ public enum ConnectionPool {
 
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             try {
-                freeConnections.add(new ProxyConnection(DriverManager.getConnection("jdbc:mysql://localhost:3306/admission?" +
-                                "useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-                        "root","5tHyu3a90Jh_q")));
+                freeConnections.add(new ProxyConnection(DriverManager.getConnection(PropertyReaderUtil.getUrl(),
+                        PropertyReaderUtil.getLogin(),PropertyReaderUtil.getPassword())));
             } catch (SQLException throwables) {
                 LogManager.getLogger().error(throwables);
             }
