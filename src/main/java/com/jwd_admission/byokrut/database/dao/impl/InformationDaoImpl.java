@@ -23,8 +23,8 @@ public class InformationDaoImpl implements InformationDao {
 
     private static final String SELECT_USER_BY_LOGIN_AND_PASSWORD="SELECT id FROM user WHERE login=? AND password=?;";
 
-    private static final String SELECT_ALL_INF = "select * from information";
-    private static final String SELECT_INF_BY_ID = "select * from information where id=?";
+    private static final String SELECT_ALL_INF = "SELECT * FROM information";
+    private static final String SELECT_INF_BY_ID = "SELECT * FROM information WHERE id=?";
 
     private static final String DELETE_USER_INF="DELETE FROM information WHERE passport_id=?;";
     private static final String DELETE_USER_INF_BY_ID="DELETE FROM information WHERE id=?;";

@@ -12,18 +12,18 @@
 </head>
 <body>
 <div align="center">
-    <form action="<%= request.getContextPath() %>/signIn" method="post">
+    <form action="<%= request.getContextPath() %>/FirstCommand?command=login" method="POST">
         <table style="with: 80%">
             <tr>
                 <td>Login</td>
-                <td><input type="text" name="login"  id="login" value="${login}" required></td>
+                <td><input type="text" name="login" required/></td>
             </tr>
             <tr>
                 <td>Password</td>
-                <td><input type="password" name="password"  id="password" value="${password}" required/></td>
+                <td><input type="password" name="password" required/></td>
             </tr>
         </table>
-        <input type="submit" value="Enter" />
+        <input type="submit" value="confirm" name="conf" />
     </form>
 
 
