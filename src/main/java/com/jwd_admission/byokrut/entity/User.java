@@ -13,7 +13,8 @@ public class User extends Entity {
     private String passportId;
     private int infId;
 
-    public User(){}
+    public User() {
+    }
 
     public User(String firstName, String middleName, String lastName, String passportId, int infId) {
         this.firstName = firstName;
@@ -27,6 +28,13 @@ public class User extends Entity {
         this.id = id;
         this.login = login;
         this.password = password;
+    }
+
+    public User(int id, String login, String password, int infId) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.infId=infId;
     }
 
     public int getId() {

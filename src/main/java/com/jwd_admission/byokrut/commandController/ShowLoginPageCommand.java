@@ -5,7 +5,7 @@ import static com.jwd_admission.byokrut.commandController.ServiceDestination.LOG
 public class ShowLoginPageCommand implements Command{
 
     @Override
-    public CommandResponsr execute(CommandRequest request) {
+    public CommandResponse execute(CommandRequest request) {
         return()->LOGIN_PAGE;
     }
 }

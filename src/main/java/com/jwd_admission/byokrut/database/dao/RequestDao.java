@@ -4,5 +4,5 @@ import com.jwd_admission.byokrut.entity.Request;
 import com.jwd_admission.byokrut.entity.User;
 
 public interface RequestDao extends BaseDao<Integer, Request> {
-    boolean Approve(Request request);
+    boolean approve(Request request);
 }

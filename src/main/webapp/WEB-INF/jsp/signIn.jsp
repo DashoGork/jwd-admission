@@ -12,7 +12,7 @@
 </head>
 <body>
 <div align="center">
-    <form action="<%= request.getContextPath() %>/FirstCommand?command=login" method="POST">
+    <form action="<%= request.getContextPath() %>/home?command=login" method="post">
         <table style="with: 80%">
             <tr>
                 <td>Login</td>
@@ -23,7 +23,8 @@
                 <td><input type="password" name="password" required/></td>
             </tr>
         </table>
-        <input type="submit" value="confirm" name="conf" />
+
+        <input type="submit"  name="conf" />
     </form>
 
 

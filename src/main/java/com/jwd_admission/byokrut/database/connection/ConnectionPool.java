@@ -29,13 +29,13 @@ public enum ConnectionPool {
             LogManager.getLogger().error(throwables);
         }
 
-        freeConnections=new LinkedBlockingDeque<>(DEFAULT_POOL_SIZE);
-        givenAwayConnections=new ArrayDeque<>();
+        freeConnections = new LinkedBlockingDeque<>(DEFAULT_POOL_SIZE);
+        givenAwayConnections = new ArrayDeque<>();
 
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             try {
                 freeConnections.add(new ProxyConnection(DriverManager.getConnection(PropertyReaderUtil.getUrl(),
-                        PropertyReaderUtil.getLogin(),PropertyReaderUtil.getPassword())));
+                        PropertyReaderUtil.getLogin(), PropertyReaderUtil.getPassword())));
             } catch (SQLException throwables) {
                 LogManager.getLogger().error(throwables);
             }
@@ -43,10 +43,10 @@ public enum ConnectionPool {
     }
 
 
-    public ProxyConnection getConnection(){
-        ProxyConnection connection=null;
+    public ProxyConnection getConnection() {
+        ProxyConnection connection = null;
         try {
-            connection=freeConnections.take();
+            connection = freeConnections.take();
             givenAwayConnections.offer(connection);
         } catch (InterruptedException e) {
             logger.error(e);
@@ -54,19 +54,18 @@ public enum ConnectionPool {
         return connection;
     }
 
-    public void releaseConnection(Connection connection){
-        if(connection.getClass().equals(ProxyConnection.class)){
+    public void releaseConnection(Connection connection) {
+        if (connection.getClass().equals(ProxyConnection.class)) {
             givenAwayConnections.remove(connection);
             freeConnections.offer((ProxyConnection) connection);
-        }
-        else try {
+        } else try {
             throw new SQLException();
         } catch (SQLException throwables) {
             logger.error(throwables);
         }
     }
 
-    public void destroyPool(){
+    public void destroyPool() {
         for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
             try {
                 freeConnections.take().hardClose();
@@ -80,7 +79,7 @@ public enum ConnectionPool {
         deregisterDrivers();
     }
 
-    private void deregisterDrivers(){
+    private void deregisterDrivers() {
         DriverManager.getDrivers().asIterator().forEachRemaining(driver -> {
             try {
                 DriverManager.deregisterDriver(driver);

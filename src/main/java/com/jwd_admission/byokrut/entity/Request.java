@@ -2,28 +2,28 @@ package com.jwd_admission.byokrut.entity;
 
 import java.util.Objects;
 
-public class Request extends Entity{
+public class Request extends Entity {
     private int id;
-    private int faculty_id;
-    private int user_id;
+    private int facultyId;
+    private int userId;
     private int score;
-    private int approved=0;
+    private int approved = 0;
 
-    public Request(int user_id) {
-        this.user_id = user_id;
+    public Request(int userId) {
+        this.userId = userId;
     }
 
-    public Request(int id, int faculty_id, int user_id, int score, int approved) {
+    public Request(int id, int facultyId, int userId, int score, int approved) {
         this.id = id;
-        this.faculty_id = faculty_id;
-        this.user_id = user_id;
+        this.facultyId = facultyId;
+        this.userId = userId;
         this.score = score;
         this.approved = approved;
     }
 
-    public Request(int id, int faculty_id, int score, int approved) {
+    public Request(int id, int facultyId, int score, int approved) {
         this.id = id;
-        this.faculty_id = faculty_id;
+        this.facultyId = facultyId;
         this.score = score;
         this.approved = approved;
     }
@@ -32,12 +32,12 @@ public class Request extends Entity{
         this.id = id;
     }
 
-    public void setFaculty_id(int faculty_id) {
-        this.faculty_id = faculty_id;
+    public void setFacultyId(int facultyId) {
+        this.facultyId = facultyId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public void setScore(int score) {
@@ -52,16 +52,16 @@ public class Request extends Entity{
         return id;
     }
 
-    public int getFaculty_id() {
-        return faculty_id;
+    public int getFacultyId() {
+        return facultyId;
     }
 
     public int getApproved() {
         return approved;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
     public int getScore() {
@@ -73,20 +73,20 @@ public class Request extends Entity{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Request request = (Request) o;
-        return id == request.id && faculty_id == request.faculty_id && user_id == request.user_id && score == request.score && approved == request.approved;
+        return id == request.id && facultyId == request.facultyId && userId == request.userId && score == request.score && approved == request.approved;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, faculty_id, user_id, score, approved);
+        return Objects.hash(id, facultyId, userId, score, approved);
     }
 
     @Override
     public String toString() {
         return "Request{" +
                 "id=" + id +
-                ", faculty_id=" + faculty_id +
-                ", user_id=" + user_id +
+                ", faculty_id=" + facultyId +
+                ", user_id=" + userId +
                 ", score=" + score +
                 ", approved=" + approved +
                 '}';

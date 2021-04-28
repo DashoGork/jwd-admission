@@ -8,8 +8,8 @@ import java.util.concurrent.Executor;
 public class ProxyConnection implements Connection {
     private Connection connection;
 
-    ProxyConnection(Connection connection){
-        this.connection=connection;
+    ProxyConnection(Connection connection) {
+        this.connection = connection;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class ProxyConnection implements Connection {
         ConnectionPool.INSTANCE.releaseConnection(this);
     }
 
-    void hardClose() throws SQLException{
+    void hardClose() throws SQLException {
         connection.close();
     }
 

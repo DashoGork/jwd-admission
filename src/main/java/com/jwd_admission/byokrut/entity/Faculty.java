@@ -2,7 +2,7 @@ package com.jwd_admission.byokrut.entity;
 
 import java.util.Objects;
 
-public class Faculty extends Entity{
+public class Faculty extends Entity {
     private int id;
     private int numberOfStudents;
     private String name;

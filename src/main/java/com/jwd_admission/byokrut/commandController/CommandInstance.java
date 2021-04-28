@@ -11,11 +11,12 @@ public enum CommandInstance {
         this.command = command;
     }
 
-    static Command commandOf(String commandName){
+    static Command commandOf(String commandName) {
         for (CommandInstance value : values()) {
-            if(value.name().equalsIgnoreCase(commandName)){
+            if (value.name().equalsIgnoreCase(commandName)) {
                 return value.command;
             }
-        }return SHOW_MAIN.command;
+        }
+        return SHOW_MAIN.command;
     }
 }

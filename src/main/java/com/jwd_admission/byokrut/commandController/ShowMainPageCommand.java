@@ -5,7 +5,7 @@ import static com.jwd_admission.byokrut.commandController.ServiceDestination.MAI
 public class ShowMainPageCommand implements Command{
 
     @Override
-    public CommandResponsr execute(CommandRequest request){
+    public CommandResponse execute(CommandRequest request){
 
         return()->MAIN_PAGE;
     }
