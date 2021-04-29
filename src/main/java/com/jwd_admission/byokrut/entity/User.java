@@ -2,7 +2,7 @@ package com.jwd_admission.byokrut.entity;
 
 import java.util.Objects;
 
-public class User extends Entity {
+public class User extends BaseEntity {
     private int id;
     private String login;
     private String password;

@@ -10,6 +10,8 @@
 <br/>
 <a href="?command=show_login">Sign In</a>
 <a href="?command=show_registration">Registration</a>
+<a href="?command=show_personal_account">PA</a>
+
 <a href="home">FC</a>
 ${login}
 ${role}

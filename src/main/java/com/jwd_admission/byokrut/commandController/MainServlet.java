@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "home", value = "/home")
-public class HomeServlet extends HttpServlet {
+public class MainServlet extends HttpServlet {
     static final String COMMAND = "command";
 
     @Override
