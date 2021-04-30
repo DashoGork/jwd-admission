@@ -126,4 +126,25 @@ public class RequestDaoImpl implements RequestDao {
         }
         return requests;
     }
+
+    public Request findRequestByUser(User user) {
+        Request request=null;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_REQUEST_BY_USER_ID);){
+
+            preparedStatement.setInt(1,user.getId());
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int facultyId = rs.getInt("faculty_id");
+                int score = rs.getInt("score");
+                int approved = rs.getInt("approved");
+                request=(new Request(id,facultyId,score,approved));
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return request;
+    }
 }

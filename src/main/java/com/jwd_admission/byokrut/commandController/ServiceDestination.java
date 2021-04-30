@@ -8,6 +8,7 @@ ServiceDestination implements Destination{
     REGISTRATION_PAGE("/WEB-INF/jsp/signIn.jsp"),
     PERSONAL_ACCOUNT_PAGE("/WEB-INF/jsp/personalAccount.jsp"),
     ADMIN_PAGE("/WEB-INF/jsp/adminPersonalAccount.jsp"),
+    EDIT_PAGE("/WEB-INF/jsp/edit.jsp"),
     INDEX("/");
 
     private final String path;

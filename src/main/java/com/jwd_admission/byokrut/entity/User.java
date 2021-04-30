@@ -34,7 +34,7 @@ public class User extends BaseEntity {
         this.id = id;
         this.login = login;
         this.password = password;
-        this.infId=infId;
+        this.infId = infId;
     }
 
     public int getId() {
@@ -137,5 +137,7 @@ public class User extends BaseEntity {
                 ", infId=" + infId +
                 '}';
     }
+
+
 }
 

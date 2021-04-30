@@ -8,7 +8,11 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebFilter(urlPatterns = "/home?command=show_personal_account")
-public class AutoficationFilter implements Filter {
+public class AuthorizationFilter implements Filter {
+    public void init(FilterConfig filterConfig) throws ServletException {
+        System.out.println("ddd");
+    }
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request=(HttpServletRequest) servletRequest;
@@ -18,6 +22,7 @@ public class AutoficationFilter implements Filter {
         final Object role = session.getAttribute("role");
         if(role==null){
             ((HttpServletResponse)servletResponse).sendRedirect("/WEB-INF/jsp/main.jsp");
+            System.out.println(" ffff");
         }
         else{
             System.out.println(role+" ffff");

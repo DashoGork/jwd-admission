@@ -38,7 +38,8 @@ public class UserDaoImpl implements UserDao {
             while (rs.next()) {
                 String login = rs.getString("login");
                 String password = rs.getString("password");
-                user = new User(id, login, password);
+                Integer infId=rs.getInt("information_id");
+                user = new User(id, login, password,infId);
             }
         } catch (SQLException e) {
             logger.error(e);
