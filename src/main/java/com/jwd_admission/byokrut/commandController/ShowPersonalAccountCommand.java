@@ -8,7 +8,6 @@ import com.jwd_admission.byokrut.entity.User;
 
 import javax.servlet.http.HttpSession;
 
-import static com.jwd_admission.byokrut.commandController.ServiceDestination.MAIN_PAGE;
 import static com.jwd_admission.byokrut.commandController.ServiceDestination.PERSONAL_ACCOUNT_PAGE;
 
 public class ShowPersonalAccountCommand implements Command{
@@ -38,13 +37,11 @@ public class ShowPersonalAccountCommand implements Command{
         user.setLogin(session.getAttribute("login").toString());
         user.setId(userDao.findUserId(user));
 
-        user= userDao.findEntityById(user.getId());
-        User userWithInf=informationDao.findEntityById(user.getInfId());
-        user.setFirstName(userWithInf.getFirstName());
-        user.setMiddleName(userWithInf.getMiddleName());
-        user.setLastName(userWithInf.getLastName());
-        user.setPassportId(userWithInf.getPassportId());
+        User.copyAllNotNullFields(user,userDao.findEntityById(user.getId()));
+        User.copyAllNotNullFields(user,informationDao.findEntityById(user.getInfId()));
+
         Request userRequest=requestDao.findRequestByUser(user);
+
         session.setAttribute("user",user);
         session.setAttribute("req",userRequest);
         return COMMAND_RESPONSE;

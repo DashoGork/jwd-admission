@@ -7,27 +7,26 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = "/home?command=show_personal_account")
+@WebFilter(urlPatterns = "/home/*")
 public class AuthorizationFilter implements Filter {
+
+    @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        System.out.println("ddd");
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request=(HttpServletRequest) servletRequest;
-        HttpServletResponse response=(HttpServletResponse) servletResponse;
-        final HttpSession session=((HttpServletRequest)request).getSession();
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
+        final HttpSession session = ((HttpServletRequest) request).getSession();
 
         final Object role = session.getAttribute("role");
-        if(role==null){
-            ((HttpServletResponse)servletResponse).sendRedirect("/WEB-INF/jsp/main.jsp");
-            System.out.println(" ffff");
-        }
-        else{
-            System.out.println(role+" ffff");
-            filterChain.doFilter(servletRequest,servletResponse);
-        }
-
+        final String command = request.getParameter("command");
+        if (command.equals("show_personal_account")) {
+            if (role == null) {
+                ((HttpServletResponse) servletResponse).sendRedirect("home?command=show_login");
+            } else {
+                filterChain.doFilter(servletRequest, servletResponse);
+            }
+        } else filterChain.doFilter(servletRequest, servletResponse);
     }
 }

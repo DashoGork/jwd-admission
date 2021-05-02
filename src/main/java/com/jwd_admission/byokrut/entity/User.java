@@ -1,8 +1,13 @@
 package com.jwd_admission.byokrut.entity;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.lang.reflect.Field;
 import java.util.Objects;
 
 public class User extends BaseEntity {
+
     private int id;
     private String login;
     private String password;
@@ -35,6 +40,27 @@ public class User extends BaseEntity {
         this.login = login;
         this.password = password;
         this.infId = infId;
+    }
+
+    public static void copyAllNotNullFields(User to, User from){
+        try{
+            for (Field field : from.getClass().getDeclaredFields()) {
+                field.setAccessible(true);
+                String name = field.getName();
+                Object value = field.get(from);
+                if (null != value)
+                {
+                    Field destField = to.getClass().getDeclaredField(name);
+                    destField.setAccessible(true);
+                    destField.set(to, value);
+                    destField.setAccessible(false);
+                }
+                field.setAccessible(false);
+            }
+        } catch (IllegalAccessException | NoSuchFieldException e) {
+            Logger logger = LogManager.getLogger();
+            logger.error(e);
+        } ///what if error has happened before .setAccessible(false)?
     }
 
     public int getId() {
