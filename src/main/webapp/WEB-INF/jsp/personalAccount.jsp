@@ -20,6 +20,6 @@
 <p><strong>Отчество:</strong> ${user.passportId}</p>
 
 <p><strong>Общий балл</strong> ${req.score}</p>
-<td><a href="/edit?id=<c:out value='${user.id}' />">Edit</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="delete?id=<c:out value='${user.id}' />">Delete</a></td>
+<td><a href="/edit">Edit</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/delete">>Delete</a></td>
 </body>
 </html>

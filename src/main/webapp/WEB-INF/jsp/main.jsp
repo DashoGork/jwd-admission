@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Home</title>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>
 <body>
 <h1 align="center"> Univercity
@@ -17,5 +18,39 @@ ${login}
 ${role}
 
 <a href="">List of All</a>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>login</th>
+        <th>password</th>
+        <th>Email</th>
+        <th>Country</th>
+        <th>Actions</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!--   for (Todo todo: todos) {  -->
+    <c:forEach var="faculty" items="${allFaculties}"
+    >
+    <tr>
+        <td>
+            <c:out value="${faculty.name}" />
+        </td>
+        <td>
+            <c:out value="${faculty.subjectIds[0]}" />
+        </td>
+        <td>
+            <c:out value="${faculty.subjectIds[1]}" />
+        </td>
+        <td>
+            <c:out value="${faculty.subjectIds[2]}" />
+        </td>
+        <td>
+            <c:out value="${faculty.numberOfStudents}" />
+        </td>
+    </tr>
+    </c:forEach>
 </body>
 </html>

@@ -23,6 +23,11 @@ public class MainServlet extends HttpServlet {
             }
 
             @Override
+            public void setAttribute(String name,Object object) {
+                 request.setAttribute(name,object);
+            }
+
+            @Override
             public Object getRequestParameter(String name) {
                 return request.getParameter(name);
             }
@@ -50,6 +55,11 @@ public class MainServlet extends HttpServlet {
         final String commandName = req.getParameter(COMMAND);
         Command command = Command.of(commandName);
         final CommandResponse execute = command.execute(new CommandRequest() {
+            @Override
+            public void setAttribute(String name, Object object) {
+                req.setAttribute(name,object);
+            }
+
             @Override
             public Object getAttribute(String name) {
                 return req.getAttribute(name);

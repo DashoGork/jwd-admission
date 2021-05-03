@@ -29,10 +29,10 @@ public enum ConnectionPool {
             LogManager.getLogger().error(throwables);
         }
 
-        freeConnections = new LinkedBlockingDeque<>(DEFAULT_POOL_SIZE);
+        freeConnections = new LinkedBlockingDeque<>(PropertyReaderUtil.getDefPoolSize());
         givenAwayConnections = new ArrayDeque<>();
 
-        for (int i = 0; i < DEFAULT_POOL_SIZE; i++) {
+        for (int i = 0; i < PropertyReaderUtil.getDefPoolSize(); i++) {
             try {
                 freeConnections.add(new ProxyConnection(DriverManager.getConnection(PropertyReaderUtil.getUrl(),
                         PropertyReaderUtil.getLogin(), PropertyReaderUtil.getPassword())));
