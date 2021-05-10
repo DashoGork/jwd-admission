@@ -3,33 +3,47 @@ package com.jwd_admission.byokrut.entity;
 import java.util.Objects;
 
 public class Request extends BaseEntity {
-    private int id;
     private int facultyId;
     private int userId;
     private int score;
     private int approved = 0;
 
     public Request(int userId) {
-        this.userId = userId;
+        super(0);
+        this.userId=userId;
     }
 
     public Request(int id, int facultyId, int userId, int score, int approved) {
-        this.id = id;
+        super(id);
         this.facultyId = facultyId;
         this.userId = userId;
         this.score = score;
         this.approved = approved;
     }
 
+    public Request( int facultyId, int userId, int score) {
+        super(-1);
+        this.facultyId = facultyId;
+        this.userId = userId;
+        this.score = score;
+    }
+
+    public Request( int facultyId, int score) {
+        super(-1);
+        this.facultyId = facultyId;
+        this.score = score;
+    }
+
+
     public Request(int id, int facultyId, int score, int approved) {
-        this.id = id;
+        super(id);
         this.facultyId = facultyId;
         this.score = score;
         this.approved = approved;
     }
 
     public void setId(int id) {
-        this.id = id;
+        super.setId(id);
     }
 
     public void setFacultyId(int facultyId) {
@@ -49,7 +63,7 @@ public class Request extends BaseEntity {
     }
 
     public int getId() {
-        return id;
+        return super.getId();
     }
 
     public int getFacultyId() {
@@ -73,22 +87,11 @@ public class Request extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Request request = (Request) o;
-        return id == request.id && facultyId == request.facultyId && userId == request.userId && score == request.score && approved == request.approved;
+        return facultyId == request.facultyId && userId == request.userId && score == request.score && approved == request.approved;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, facultyId, userId, score, approved);
-    }
-
-    @Override
-    public String toString() {
-        return "Request{" +
-                "id=" + id +
-                ", faculty_id=" + facultyId +
-                ", user_id=" + userId +
-                ", score=" + score +
-                ", approved=" + approved +
-                '}';
+        return Objects.hash(facultyId, userId, score, approved);
     }
 }

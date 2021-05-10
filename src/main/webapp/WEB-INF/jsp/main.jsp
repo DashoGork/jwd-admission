@@ -39,13 +39,13 @@ ${role}
             <c:out value="${faculty.name}" />
         </td>
         <td>
-            <c:out value="${faculty.subjectIds[0]}" />
+            <c:out value="${faculty.subjects[0].getName()}" />
         </td>
         <td>
-            <c:out value="${faculty.subjectIds[1]}" />
+            <c:out value="${faculty.subjects[1].getName()}" />
         </td>
         <td>
-            <c:out value="${faculty.subjectIds[2]}" />
+            <c:out value="${faculty.subjects[2].getName()}" />
         </td>
         <td>
             <c:out value="${faculty.numberOfStudents}" />

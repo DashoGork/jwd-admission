@@ -12,11 +12,12 @@
 </head>
 <body>
 <div align="center">
-    <form action="<%= request.getContextPath() %>/registration" method="post">
+    <form action="<%= request.getContextPath() %>/home?command=registration" method="post">
         <table style="with: 80%">
             <tr>
                 <td>Login</td>
                 <td><input type="text" name="login"  id="login" value="${login}" placeholder="Enter Login" required></td>
+                <td><>
             </tr>
             <tr>
                 <td>Password</td>

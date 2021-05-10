@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class User extends BaseEntity {
 
-    private int id;
+
     private String login;
     private String password;
     private int roleId;
@@ -19,9 +19,11 @@ public class User extends BaseEntity {
     private int infId;
 
     public User() {
+        super(0);
     }
 
     public User(String firstName, String middleName, String lastName, String passportId, int infId) {
+        super(0);
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
@@ -30,20 +32,42 @@ public class User extends BaseEntity {
     }
 
     public User(int id, String login, String password) {
-        this.id = id;
+        super(id);
         this.login = login;
         this.password = password;
     }
 
     public User(int id, String login, String password, int infId) {
-        this.id = id;
+        super(id);
         this.login = login;
         this.password = password;
         this.infId = infId;
     }
 
+    public User(int id, String login, String password,  String firstName, String middleName, String lastName, String passportId) {
+        super(id);
+        this.login = login;
+        this.password = password;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.passportId = passportId;
+    }
+
+    public User( String login, String password,  String firstName, String middleName, String lastName, String passportId) {
+        super(-1);
+        this.login = login;
+        this.password = password;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.passportId = passportId;
+    }
+
     public static void copyAllNotNullFields(User to, User from){
         try{
+            if(from.getId()!=0)
+                to.setId(from.getId());
             for (Field field : from.getClass().getDeclaredFields()) {
                 field.setAccessible(true);
                 String name = field.getName();
@@ -64,7 +88,7 @@ public class User extends BaseEntity {
     }
 
     public int getId() {
-        return id;
+        return super.getId();
     }
 
     public String getLogin() {
@@ -112,7 +136,7 @@ public class User extends BaseEntity {
     }
 
     public void setId(int id) {
-        this.id = id;
+        super.setId(id);
     }
 
     public void setLogin(String login) {
@@ -141,19 +165,18 @@ public class User extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id && roleId == user.roleId && infId == user.infId && Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(middleName, user.middleName) && Objects.equals(lastName, user.lastName) && Objects.equals(passportId, user.passportId);
+        return roleId == user.roleId && infId == user.infId && Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(middleName, user.middleName) && Objects.equals(lastName, user.lastName) && Objects.equals(passportId, user.passportId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, password, roleId, firstName, middleName, lastName, passportId, infId);
+        return Objects.hash(login, password, roleId, firstName, middleName, lastName, passportId, infId);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
+                "login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", roleId=" + roleId +
                 ", firstName='" + firstName + '\'' +
@@ -163,7 +186,5 @@ public class User extends BaseEntity {
                 ", infId=" + infId +
                 '}';
     }
-
-
 }
 

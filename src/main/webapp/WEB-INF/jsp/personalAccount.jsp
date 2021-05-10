@@ -12,6 +12,7 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>
 <body>
+<c:forEach var="user" items="${user}">
 <p><strong>Login:</strong> ${user.login}</p>
 <p><strong>Paasword:</strong> ${user.password}</p>
 <p><strong>Nmae:</strong> ${user.firstName}</p>
@@ -19,7 +20,9 @@
 <p><strong>Отчество:</strong> ${user.middleName}</p>
 <p><strong>Отчество:</strong> ${user.passportId}</p>
 
-<p><strong>Общий балл</strong> ${req.score}</p>
-<td><a href="/edit">Edit</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="/delete">>Delete</a></td>
+
+    <a href="?command=approve?id=${user.id}">Approve</a>
+<td><a href="?command=show_edit?id=${user.id}">Edit</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="?command=delete?id=${user.id}">Delete</a></td>
+</c:forEach>
 </body>
 </html>

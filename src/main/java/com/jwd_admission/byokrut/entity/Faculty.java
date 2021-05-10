@@ -4,27 +4,27 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Faculty extends BaseEntity {
-    private int id;
     private int numberOfStudents;
     private String name;
-    private ArrayList<Integer> subjectIds;
+    private ArrayList<Subject> subjects;
 
     public Faculty(int id) {
-        this.id = id;
+        super(id);
     }
 
     public Faculty(String name) {
+        super(0);
         this.name = name;
     }
 
     public Faculty(int id, int numberOfStudents, String name) {
-        this.id = id;
+        super(id);
         this.numberOfStudents = numberOfStudents;
         this.name = name;
     }
 
     public void setId(int id) {
-        this.id = id;
+        super.setId(id);
     }
 
     public void setNumberOfStudents(int numberOfStudents) {
@@ -35,25 +35,17 @@ public class Faculty extends BaseEntity {
         this.name = name;
     }
 
-    public void setSubjectId1(int subjectId1) {
-        this.subjectIds.set(0, subjectId1);
+    public void setSubjects(ArrayList<Subject> subjects) {
+        this.subjects = subjects;
     }
 
-    public void setSubjectId2(int subjectId2) {
-        this.subjectIds.set(1, subjectId2);
-    }
-
-    public void setSubjectId3(int subjectId3) {
-
-        this.subjectIds.set(2, subjectId3);
-    }
-
-    public void setSubjectIds(ArrayList<Integer> subjectIds) {
-        this.subjectIds = subjectIds;
+    public Faculty(int id, ArrayList<Subject> subjects) {
+        super(id);
+        this.subjects = subjects;
     }
 
     public int getId() {
-        return id;
+        return super.getId();
     }
 
     public int getNumberOfStudents() {
@@ -64,20 +56,8 @@ public class Faculty extends BaseEntity {
         return name;
     }
 
-    public int getSubjectId1() {
-        return subjectIds.get(0);
-    }
-
-    public int getSubjectId2() {
-        return subjectIds.get(1);
-    }
-
-    public int getSubjectId3() {
-        return subjectIds.get(2);
-    }
-
-    public ArrayList<Integer> getSubjectIds() {
-        return subjectIds;
+    public ArrayList<Subject> getSubjects() {
+        return subjects;
     }
 
     @Override
@@ -85,11 +65,11 @@ public class Faculty extends BaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Faculty faculty = (Faculty) o;
-        return id == faculty.id && numberOfStudents == faculty.numberOfStudents && Objects.equals(name, faculty.name) && Objects.equals(subjectIds, faculty.subjectIds);
+        return numberOfStudents == faculty.numberOfStudents && Objects.equals(name, faculty.name) && Objects.equals(subjects, faculty.subjects);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, numberOfStudents, name, subjectIds);
+        return Objects.hash(numberOfStudents, name, subjects);
     }
 }

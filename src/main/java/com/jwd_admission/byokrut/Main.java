@@ -1,11 +1,7 @@
 package com.jwd_admission.byokrut;
 
-import com.jwd_admission.byokrut.database.connection.ConnectionPool;
-import com.jwd_admission.byokrut.entity.Request;
-import com.jwd_admission.byokrut.util.PropertyReaderUtil;
-
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
     public static void main(String[] args) {

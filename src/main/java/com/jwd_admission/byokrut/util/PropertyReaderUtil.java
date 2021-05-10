@@ -3,52 +3,25 @@ package com.jwd_admission.byokrut.util;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class PropertyReaderUtil {
-    private static int defPoolSize;
-    private static String url;
-    private static String password;
-    private static String login;
-    private static final Properties properties = new Properties();
+public enum PropertyReaderUtil {
+    INSTANSE;
+    private Properties properties = null;
+    private final Logger logger = LogManager.getLogger();
 
-    private static final Logger logger = LogManager.getLogger();
-
-    private PropertyReaderUtil() {
-    }
-
-    private static void loadProperties() {
-        try(InputStream iStream = new FileInputStream("C:\\Users\\Юзер\\Documents\\GitHub\\jwd-admission\\src\\main\\resources\\application.properties");) {
-            properties.load(iStream);
-            defPoolSize= Integer.parseInt(properties.getProperty("defaultPoolSize"));
-            url=properties.getProperty("connectionUrl");
-            password=properties.getProperty("password");
-            login=properties.getProperty("login");
+    PropertyReaderUtil() {
+        try (InputStream input = PropertyReaderUtil.class.getClassLoader().getResourceAsStream("application.properties")) {
+            properties = new Properties();
+            properties.load(input);
         } catch (IOException e) {
             logger.error(e);
         }
     }
 
-    public static int getDefPoolSize(){
-        if(defPoolSize==0) loadProperties();
-        return defPoolSize;
-    }
-
-    public static String getUrl(){
-        if(url==null) loadProperties();
-        return url;
-    }
-
-    public static String getPassword(){
-        if(password==null) loadProperties();
-        return password;
-    }
-
-    public static String getLogin(){
-        if(login==null) loadProperties();
-        return login;
+    public Properties getProperties() {
+        return properties;
     }
 }
