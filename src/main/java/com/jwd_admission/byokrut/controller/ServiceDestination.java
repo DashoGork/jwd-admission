@@ -2,7 +2,7 @@ package com.jwd_admission.byokrut.controller;
 
 public enum
 
-ServiceDestination implements Destination{
+ServiceDestination implements Destination {
     MAIN_PAGE("/WEB-INF/jsp/main.jsp"),
     LOGIN_PAGE("/WEB-INF/jsp/signIn.jsp"),
     REGISTRATION_PAGE("/WEB-INF/jsp/registration.jsp"),
@@ -12,7 +12,7 @@ ServiceDestination implements Destination{
     INDEX("/");
 
     private final String path;
-    private static final String BASE_URL="/WEB-INF/jsp";
+    private static final String BASE_URL = "/WEB-INF/jsp";
 
 
     ServiceDestination(String path) {

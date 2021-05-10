@@ -7,7 +7,6 @@ import com.jwd_admission.byokrut.controller.Destination;
 import com.jwd_admission.byokrut.dao.impl.InformationDaoImpl;
 import com.jwd_admission.byokrut.dao.impl.RequestDaoImpl;
 import com.jwd_admission.byokrut.dao.impl.UserDaoImpl;
-import com.jwd_admission.byokrut.entity.Request;
 import com.jwd_admission.byokrut.entity.User;
 
 import java.util.regex.Matcher;
@@ -17,9 +16,9 @@ import static com.jwd_admission.byokrut.controller.ServiceDestination.MAIN_PAGE;
 import static com.jwd_admission.byokrut.controller.pagesController.MainServlet.COMMAND;
 
 public class UserDeleteCommand implements Command {
-    InformationDaoImpl informationDao =new InformationDaoImpl();
-    UserDaoImpl userDao=new UserDaoImpl();
-    RequestDaoImpl requestDao=new RequestDaoImpl();
+    InformationDaoImpl informationDao = new InformationDaoImpl();
+    UserDaoImpl userDao = new UserDaoImpl();
+    RequestDaoImpl requestDao = new RequestDaoImpl();
 
     public static final CommandResponse COMMAND_RESPONSE = new CommandResponse() {
         @Override
@@ -36,22 +35,21 @@ public class UserDeleteCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        int id=-1;
+        int id = -1;
         String idFromRequet;
         String commandName = request.getParameter(COMMAND);
         String pattern = "(id=\\d+)";
         Pattern.compile(pattern).matcher(commandName).find();
-        Matcher matcher=Pattern.compile(pattern).matcher(commandName);
-        if(matcher.find()){
-            idFromRequet=matcher.group();
-            id= Integer.parseInt(idFromRequet.substring(3));
+        Matcher matcher = Pattern.compile(pattern).matcher(commandName);
+        if (matcher.find()) {
+            idFromRequet = matcher.group();
+            id = Integer.parseInt(idFromRequet.substring(3));
             System.out.println(id);
         }
-        User user= userDao.findEntityById(id);
+        User user = userDao.findEntityById(id);
         requestDao.delete(id);
         userDao.delete(id);
         informationDao.delete(user.getInfId());
-
 
 
         return COMMAND_RESPONSE;

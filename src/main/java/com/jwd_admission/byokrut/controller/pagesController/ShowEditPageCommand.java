@@ -17,9 +17,9 @@ import static com.jwd_admission.byokrut.controller.pagesController.MainServlet.C
 import static com.jwd_admission.byokrut.controller.ServiceDestination.EDIT_PAGE;
 
 public class ShowEditPageCommand implements Command {
-    private UserDaoImpl userDao=new UserDaoImpl();
-    private InformationDaoImpl informationDao=new InformationDaoImpl();
-    private RequestDaoImpl requestDao=new RequestDaoImpl();
+    private UserDaoImpl userDao = new UserDaoImpl();
+    private InformationDaoImpl informationDao = new InformationDaoImpl();
+    private RequestDaoImpl requestDao = new RequestDaoImpl();
 
     public static final CommandResponse COMMAND_RESPONSE = new CommandResponse() {
         @Override
@@ -36,22 +36,22 @@ public class ShowEditPageCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        int id=-1;
+        int id = -1;
         String idFromRequet;
         String commandName = request.getParameter(COMMAND);
         String pattern = "(id=\\d+)";
         Pattern.compile(pattern).matcher(commandName).find();
-        Matcher matcher=Pattern.compile(pattern).matcher(commandName);
-        if(matcher.find()){
-            idFromRequet=matcher.group();
-            id= Integer.parseInt(idFromRequet.substring(3));
+        Matcher matcher = Pattern.compile(pattern).matcher(commandName);
+        if (matcher.find()) {
+            idFromRequet = matcher.group();
+            id = Integer.parseInt(idFromRequet.substring(3));
             System.out.println(id);
         }
-        User user= userDao.findEntityById(id);
+        User user = userDao.findEntityById(id);
         User.copyAllNotNullFields(user, informationDao.findEntityById(user.getInfId()));
         Request userRequest = requestDao.findRequestByUser(user);
-        request.setAttribute("req",userRequest);
-        request.setAttribute("user",user);
-        return()->EDIT_PAGE;
+        request.setAttribute("req", userRequest);
+        request.setAttribute("user", user);
+        return () -> EDIT_PAGE;
     }
 }

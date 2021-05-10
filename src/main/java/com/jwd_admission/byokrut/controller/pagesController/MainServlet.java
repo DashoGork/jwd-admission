@@ -18,9 +18,9 @@ public class MainServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-         String commandName = request.getParameter(COMMAND);
-        if(commandName.indexOf("?")>0){
-            commandName=commandName.substring(0,commandName.lastIndexOf("?"));
+        String commandName = request.getParameter(COMMAND);
+        if (commandName.indexOf("?") > 0) {
+            commandName = commandName.substring(0, commandName.lastIndexOf("?"));
         }
 
         Command command = Command.of(commandName);
@@ -29,14 +29,15 @@ public class MainServlet extends HttpServlet {
             public String getParameter(String parameter) {
                 return request.getParameter(parameter);
             }
+
             @Override
             public Object getAttribute(String name) {
                 return request.getAttribute(name);
             }
 
             @Override
-            public void setAttribute(String name,Object object) {
-                 request.setAttribute(name,object);
+            public void setAttribute(String name, Object object) {
+                request.setAttribute(name, object);
             }
 
             @Override
@@ -65,8 +66,8 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String commandName = req.getParameter(COMMAND);
-        if(commandName.indexOf("?")>0){
-            commandName=commandName.substring(0,commandName.lastIndexOf("?"));
+        if (commandName.indexOf("?") > 0) {
+            commandName = commandName.substring(0, commandName.lastIndexOf("?"));
         }
         Command command = Command.of(commandName);
         final CommandResponse execute = command.execute(new CommandRequest() {
@@ -78,7 +79,7 @@ public class MainServlet extends HttpServlet {
 
             @Override
             public void setAttribute(String name, Object object) {
-                req.setAttribute(name,object);
+                req.setAttribute(name, object);
             }
 
             @Override

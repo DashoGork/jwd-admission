@@ -20,8 +20,8 @@ public class RequestDaoImpl implements RequestDao {
     private static final String APPROVE_REQUEST = "UPDATE request SET approved=1 where user_id=?;";
     private static final String SELECT_REQUEST_BY_USER_ID = "SELECT * FROM request WHERE user_id=?";
     private static final String SELECT_ALL_REQUESTS = "SELECT * FROM request ;";
-    private static final String UPDATE_REQUEST="UPDATE request set score=?,faculty_id=? where user_id=?";
-    private static final String DELETE_REQUEST_BY_USER_ID="DELETE FROM request WHERE user_id=?;";
+    private static final String UPDATE_REQUEST = "UPDATE request set score=?,faculty_id=? where user_id=?";
+    private static final String DELETE_REQUEST_BY_USER_ID = "DELETE FROM request WHERE user_id=?;";
 
     @Override
     public Request findEntityById(Integer id) {
@@ -105,7 +105,7 @@ public class RequestDaoImpl implements RequestDao {
             preparedStatement1.setInt(2, request.getFacultyId());
             preparedStatement1.setInt(3, request.getUserId());
             preparedStatement1.executeUpdate();
-            request=(findEntityById(request.getUserId()));
+            request = (findEntityById(request.getUserId()));
         } catch (SQLException throwables) {
             logger.error(throwables);
         }
@@ -118,7 +118,7 @@ public class RequestDaoImpl implements RequestDao {
              PreparedStatement preparedStatement = connection.prepareStatement(APPROVE_REQUEST);) {
             preparedStatement.setInt(1, userId);
             int result = preparedStatement.executeUpdate();
-            return  (result == 1);
+            return (result == 1);
         } catch (SQLException throwables) {
             logger.error(throwables);
         }
@@ -147,18 +147,18 @@ public class RequestDaoImpl implements RequestDao {
     }
 
     public Request findRequestByUser(User user) {
-        Request request=null;
+        Request request = null;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_REQUEST_BY_USER_ID);){
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_REQUEST_BY_USER_ID);) {
 
-            preparedStatement.setInt(1,user.getId());
+            preparedStatement.setInt(1, user.getId());
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
                 int facultyId = rs.getInt("faculty_id");
                 int score = rs.getInt("score");
                 int approved = rs.getInt("approved");
-                request=(new Request(id,facultyId,score,approved));
+                request = (new Request(id, facultyId, score, approved));
 
             }
         } catch (SQLException throwables) {

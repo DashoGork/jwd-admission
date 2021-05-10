@@ -39,8 +39,8 @@ public class UserDaoImpl implements UserDao {
             while (rs.next()) {
                 String login = rs.getString("login");
                 String password = rs.getString("password");
-                Integer infId=rs.getInt("information_id");
-                user = new User(id, login, password,infId);
+                Integer infId = rs.getInt("information_id");
+                user = new User(id, login, password, infId);
             }
         } catch (SQLException e) {
             logger.error(e);
@@ -57,8 +57,8 @@ public class UserDaoImpl implements UserDao {
             while (rs.next()) {
                 String login = rs.getString("login");
                 String password = rs.getString("password");
-                Integer id=rs.getInt("id");
-                user = new User(id, login, password,infId);
+                Integer id = rs.getInt("id");
+                user = new User(id, login, password, infId);
             }
         } catch (SQLException e) {
             logger.error(e);
@@ -77,7 +77,7 @@ public class UserDaoImpl implements UserDao {
                 int infId = rs.getInt("information_id");
                 String login = rs.getString("login");
                 String password = rs.getString("password");
-                users.add(new User(id, login, password,infId));
+                users.add(new User(id, login, password, infId));
             }
         } catch (SQLException e) {
             logger.error(e);

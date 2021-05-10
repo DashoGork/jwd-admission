@@ -11,7 +11,7 @@ import java.util.Arrays;
 @WebFilter(urlPatterns = "/home/*")
 public class AuthorizationFilter implements Filter {
 
-    private String[] whiteList = {"show_main", "show_login", "show_registration", "login","show_registration","registration"};
+    private String[] whiteList = {"show_main", "show_login", "show_registration", "login", "show_registration", "registration"};
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

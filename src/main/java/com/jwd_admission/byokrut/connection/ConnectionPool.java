@@ -19,10 +19,10 @@ public enum ConnectionPool {
     private BlockingQueue<ProxyConnection> freeConnections;
     private Queue<ProxyConnection> givenAwayConnections;
 
-    private final int DEFAULT_POOL_SIZE = Integer.valueOf(PropertyReaderUtil.INSTANSE.getProperties().getProperty("defaultPoolSize")) ;
-    private final String URL=PropertyReaderUtil.INSTANSE.getProperties().getProperty("connectionUrl");
-    private final String LOGIN=PropertyReaderUtil.INSTANSE.getProperties().getProperty("login");
-    private final String PASSWORD=PropertyReaderUtil.INSTANSE.getProperties().getProperty("password");
+    private final int DEFAULT_POOL_SIZE = Integer.valueOf(PropertyReaderUtil.INSTANSE.getProperties().getProperty("defaultPoolSize"));
+    private final String URL = PropertyReaderUtil.INSTANSE.getProperties().getProperty("connectionUrl");
+    private final String LOGIN = PropertyReaderUtil.INSTANSE.getProperties().getProperty("login");
+    private final String PASSWORD = PropertyReaderUtil.INSTANSE.getProperties().getProperty("password");
 
 
     {

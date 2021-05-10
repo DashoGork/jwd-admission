@@ -37,17 +37,18 @@ public class ShowPersonalAccountCommand implements Command {
 
     };
 
+
     @Override
     public CommandResponse execute(CommandRequest request) {
         HttpSession session = request.createSession();
-        int role=Integer.parseInt(String.valueOf(session.getAttribute("role")));
+        int role = Integer.parseInt(String.valueOf(session.getAttribute("role")));
         if (role == 1) {
-            List<User> userList=informationDao.findAll();
+            List<User> userList = informationDao.findAll();
             for (User user : userList) {
                 User.copyAllNotNullFields(user, userDao.findEntityByInfId(user.getInfId()));
             }
-            List<Request> userReq=requestDao.findAll();
-            request.setAttribute("user", userList);
+            List<Request> userReq = requestDao.findAll();
+            request.setAttribute("users", userList);
             request.setAttribute("req", userReq);
         } else {
             User user = new User();
@@ -60,10 +61,9 @@ public class ShowPersonalAccountCommand implements Command {
 
             Request userRequest = requestDao.findRequestByUser(user);
 
-            session.setAttribute("user", user);
+            request.setAttribute("user", user);
             session.setAttribute("req", userRequest);
             request.setAttribute("faculty", facultyDao.findEntityById(userRequest.getFacultyId()));
-
         }
         return COMMAND_RESPONSE;
     }

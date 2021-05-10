@@ -12,17 +12,35 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </head>
 <body>
-<c:forEach var="user" items="${user}">
+<c:if test="${users!=null}">
+<c:forEach var="user" items="${users}">
 <p><strong>Login:</strong> ${user.login}</p>
-<p><strong>Paasword:</strong> ${user.password}</p>
-<p><strong>Nmae:</strong> ${user.firstName}</p>
+<p><strong>Password:</strong> ${user.password}</p>
+<p><strong>Name:</strong> ${user.firstName}</p>
 <p><strong>Фамилия:</strong> ${user.lastName}</p>
 <p><strong>Отчество:</strong> ${user.middleName}</p>
 <p><strong>Отчество:</strong> ${user.passportId}</p>
 
-
     <a href="?command=approve?id=${user.id}">Approve</a>
-<td><a href="?command=show_edit?id=${user.id}">Edit</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="?command=delete?id=${user.id}">Delete</a></td>
+    <a href="?command=delete?id=${user.id}">Delete</a></td>
 </c:forEach>
+</c:if>
+<c:if test="${user!=null}">
+
+        <p><strong>Login:</strong> ${user.login}</p>
+        <p><strong>Password:</strong> ${user.password}</p>
+        <p><strong>Name:</strong> ${user.firstName}</p>
+        <p><strong>Фамилия:</strong> ${user.lastName}</p>
+        <p><strong>Отчество:</strong> ${user.middleName}</p>
+        <p><strong>Отчество:</strong> ${user.passportId}</p>
+    <p><strong>Количество баллов:</strong> ${req.score}</p>
+    <p><strong>Статус заявки:</strong> ${req.approved}</p>
+
+
+
+    <td><a href="?command=show_edit?id=${user.id}">Edit</a> &nbsp;&nbsp;&nbsp;&nbsp; <a href="?command=delete?id=${user.id}">Delete</a></td>
+</c:if>
+
+
 </body>
 </html>

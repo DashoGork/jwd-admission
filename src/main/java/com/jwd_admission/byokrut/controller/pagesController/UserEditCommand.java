@@ -18,9 +18,9 @@ import static com.jwd_admission.byokrut.controller.ServiceDestination.PERSONAL_A
 import static com.jwd_admission.byokrut.controller.pagesController.MainServlet.COMMAND;
 
 public class UserEditCommand implements Command {
-    InformationDaoImpl informationDao=new InformationDaoImpl();
-    UserDaoImpl userDao=new UserDaoImpl();
-    RequestDaoImpl requestDao=new RequestDaoImpl();
+    InformationDaoImpl informationDao = new InformationDaoImpl();
+    UserDaoImpl userDao = new UserDaoImpl();
+    RequestDaoImpl requestDao = new RequestDaoImpl();
 
     public static final CommandResponse COMMAND_RESPONSE = new CommandResponse() {
         @Override
@@ -40,24 +40,24 @@ public class UserEditCommand implements Command {
 
         String login = (String) request.getRequestParameter("login");
         String password = (String) request.getRequestParameter("password");
-        int id= Integer.parseInt((String) request.getRequestParameter("id"));
-        String name=request.getParameter("name");
-        String middleNme=request.getParameter("middleName");
-        String lastName=request.getParameter("lastName");
-        String score_1=request.getParameter("score_1");
-        String score_2=request.getParameter("score_2");
-        String score_3=request.getParameter("score_3");
-        String score_4=request.getParameter("score_4");
-        String faculty=request.getParameter("faculty");
-        String passport_id=request.getParameter("passport_id");
-        User user= userDao.findEntityById(id);
+        int id = Integer.parseInt((String) request.getRequestParameter("id"));
+        String name = request.getParameter("name");
+        String middleNme = request.getParameter("middleName");
+        String lastName = request.getParameter("lastName");
+        String score_1 = request.getParameter("score_1");
+        String score_2 = request.getParameter("score_2");
+        String score_3 = request.getParameter("score_3");
+        String score_4 = request.getParameter("score_4");
+        String faculty = request.getParameter("faculty");
+        String passport_id = request.getParameter("passport_id");
+        User user = userDao.findEntityById(id);
         user.setPassportId(passport_id);
         user.setFirstName(name);
         user.setLastName(lastName);
         user.setMiddleName(middleNme);
         user.setPassword(password);
-        Request request1= new Request(Integer.parseInt(faculty),id,(Integer.parseInt(score_1)+(Integer.parseInt(score_2)+
-                (Integer.parseInt(score_3)+(Integer.parseInt(score_4))))));
+        Request request1 = new Request(Integer.parseInt(faculty), id, (Integer.parseInt(score_1) + (Integer.parseInt(score_2) +
+                (Integer.parseInt(score_3) + (Integer.parseInt(score_4))))));
         informationDao.update(user);
         userDao.updateUser(user);
         ///ex

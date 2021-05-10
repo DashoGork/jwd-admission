@@ -11,13 +11,13 @@ import java.util.List;
 import static com.jwd_admission.byokrut.controller.ServiceDestination.MAIN_PAGE;
 
 public class ShowMainPageCommand implements Command {
-    FacultyDaoImpl facultyDao=new FacultyDaoImpl();
+    FacultyDaoImpl facultyDao = new FacultyDaoImpl();
 
     @Override
-    public CommandResponse execute(CommandRequest request){
-        List<Faculty> faculties=facultyDao.findAll();
-        request.setAttribute("allFaculties",faculties);
-        return()->MAIN_PAGE;
+    public CommandResponse execute(CommandRequest request) {
+        List<Faculty> faculties = facultyDao.findAll();
+        request.setAttribute("allFaculties", faculties);
+        return () -> MAIN_PAGE;
     }
 
 

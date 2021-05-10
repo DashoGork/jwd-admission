@@ -10,6 +10,6 @@ public class ShowLoginPageCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        return()->LOGIN_PAGE;
+        return () -> LOGIN_PAGE;
     }
 }

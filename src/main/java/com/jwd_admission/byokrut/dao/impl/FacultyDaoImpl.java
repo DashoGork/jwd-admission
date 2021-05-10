@@ -25,19 +25,17 @@ public class FacultyDaoImpl implements FacultyDao {
     private static final String SELECT_SUBJECT_ID_NAME_BY_FACULTY_ID_FROM_FAC_SUB = "select name, subject_id from subject inner join faculty_subject fs on subject.id = fs.subject_id where faculty_id=?";
 
 
-
     private static final String DELETE_FACULTY_BY_ID = "DELETE FROM faculty WHERE id=?;";
     private static final String DELETE_FACULTY_BY_NAME = "DELETE FROM faculty WHERE name=?;";
 
     private static final String UPDATE_FACULTY_BY_ID = "UPDATE FROM faculty WHERE id=?;";
 
 
-
     @Override
     public Faculty findEntityById(Integer id) {
-        Faculty faculty=new Faculty(id);
+        Faculty faculty = new Faculty(id);
         faculty.setSubjects(findSubjectInf(id));
-        int iterator=0;
+        int iterator = 0;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FACULTY_BY_ID_FROM_FACULTY);) {
             preparedStatement.setInt(1, id);
@@ -54,17 +52,17 @@ public class FacultyDaoImpl implements FacultyDao {
         return faculty;
     }
 
-    private ArrayList<Subject> findSubjectInf(Integer facultyId){
-        ArrayList<Subject> subjects=new ArrayList<>(3);
-        int iterator=0;
+    private ArrayList<Subject> findSubjectInf(Integer facultyId) {
+        ArrayList<Subject> subjects = new ArrayList<>(3);
+        int iterator = 0;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_SUBJECT_ID_NAME_BY_FACULTY_ID_FROM_FAC_SUB);) {
             preparedStatement.setInt(1, facultyId);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 Integer subjectId = rs.getInt("subject_id");
-                String name=rs.getString("name");
-                subjects.add(new Subject(subjectId,name));
+                String name = rs.getString("name");
+                subjects.add(new Subject(subjectId, name));
                 iterator++;
             }
         } catch (SQLException e) {
@@ -72,9 +70,6 @@ public class FacultyDaoImpl implements FacultyDao {
         }
         return subjects;
     }
-
-
-
 
 
     @Override
