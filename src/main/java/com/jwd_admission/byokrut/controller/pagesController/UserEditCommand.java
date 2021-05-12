@@ -39,20 +39,20 @@ public class UserEditCommand implements Command {
         String name = request.getParameter("name");
         String middleNme = request.getParameter("middleName");
         String lastName = request.getParameter("lastName");
-        String score_1 = request.getParameter("score_1");
-        String score_2 = request.getParameter("score_2");
-        String score_3 = request.getParameter("score_3");
-        String score_4 = request.getParameter("score_4");
+        String score1 = request.getParameter("score_1");
+        String score2 = request.getParameter("score_2");
+        String score3 = request.getParameter("score_3");
+        String score4 = request.getParameter("score_4");
         String faculty = request.getParameter("faculty");
-        String passport_id = request.getParameter("passport_id");
+        String passportId = request.getParameter("passport_id");
         User user = userDao.findEntityById(id);
-        user.setPassportId(passport_id);
+        user.setPassportId(passportId);
         user.setFirstName(name);
         user.setLastName(lastName);
         user.setMiddleName(middleNme);
         user.setPassword(password);
-        Request request1 = new Request(Integer.parseInt(faculty), id, (Integer.parseInt(score_1) + (Integer.parseInt(score_2) +
-                (Integer.parseInt(score_3) + (Integer.parseInt(score_4))))));
+        Request request1 = new Request(Integer.parseInt(faculty), id, (Integer.parseInt(score1) + (Integer.parseInt(score2) +
+                (Integer.parseInt(score3) + (Integer.parseInt(score4))))));
         informationDao.update(user);
         userDao.updateUser(user);
         ///ex
