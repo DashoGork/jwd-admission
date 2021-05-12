@@ -10,12 +10,7 @@ import com.jwd_admission.byokrut.dao.impl.UserDaoImpl;
 import com.jwd_admission.byokrut.entity.Request;
 import com.jwd_admission.byokrut.entity.User;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import static com.jwd_admission.byokrut.controller.ServiceDestination.MAIN_PAGE;
-import static com.jwd_admission.byokrut.controller.ServiceDestination.PERSONAL_ACCOUNT_PAGE;
-import static com.jwd_admission.byokrut.controller.pagesController.MainServlet.COMMAND;
 
 public class UserEditCommand implements Command {
     InformationDaoImpl informationDao = new InformationDaoImpl();

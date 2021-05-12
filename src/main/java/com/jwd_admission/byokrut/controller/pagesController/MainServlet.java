@@ -25,6 +25,7 @@ public class MainServlet extends HttpServlet {
 
         Command command = Command.of(commandName);
         final CommandResponse execute = command.execute(new CommandRequest() {
+
             @Override
             public String getParameter(String parameter) {
                 return request.getParameter(parameter);

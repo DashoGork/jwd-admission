@@ -138,18 +138,15 @@ public class InformationDaoImpl implements InformationDao {
             preparedStatement.setString(1, user.getPassportId());
             preparedStatement.execute();
             ResultSet resultSet = preparedStatement.getResultSet();
-            if (resultSet.next()) return resultSet.getInt("id");
-            else return -1;
+             return ((resultSet.next())?resultSet.getInt("id"):-1);
         } catch (SQLException throwables) {
             logger.error(throwables);
-            //throwables.printStackTrace();
         }
         return -1;
     }
 
     @Override
     public boolean userInfExist(User user) {
-        if (findUserInformationIdByPassportId(user) != -1) return true;
-        else return false;
+        return (findUserInformationIdByPassportId(user) != -1);
     }
 }

@@ -34,21 +34,21 @@ public class UserRegistrationCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        String login = (String) request.getRequestParameter("login");
-        String password = (String) request.getRequestParameter("password");
+        String login = request.getParameter("login");
+        String password = request.getParameter("password");
         String name = request.getParameter("name");
         String middleNme = request.getParameter("middleName");
         String lastName = request.getParameter("lastName");
-        String score_1 = request.getParameter("score_1");
-        String score_2 = request.getParameter("score_2");
-        String score_3 = request.getParameter("score_3");
-        String score_4 = request.getParameter("score_4");
+        String score1 = request.getParameter("score_1");
+        String score2 = request.getParameter("score_2");
+        String score3 = request.getParameter("score_3");
+        String score4 = request.getParameter("score_4");
         String faculty = request.getParameter("faculty");
-        String passport_id = request.getParameter("passport_id");
+        String passportId = request.getParameter("passport_id");
 
-        User user = new User(login, password, name, middleNme, lastName, passport_id);
-        Request request1 = new Request(Integer.parseInt(faculty), (Integer.parseInt(score_1) + (Integer.parseInt(score_2) +
-                (Integer.parseInt(score_3) + (Integer.parseInt(score_4))))));
+        User user = new User(login, password, name, middleNme, lastName, passportId);
+        Request request1 = new Request(Integer.parseInt(faculty), (Integer.parseInt(score1) + (Integer.parseInt(score2) +
+                (Integer.parseInt(score3) + (Integer.parseInt(score4))))));
 
         if (!informationDao.userInfExist(user) & !userDao.userExist(user)) {
             if (informationDao.create(user)) {

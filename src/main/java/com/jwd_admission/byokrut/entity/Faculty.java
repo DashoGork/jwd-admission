@@ -13,7 +13,7 @@ public class Faculty extends BaseEntity {
     }
 
     public Faculty(String name) {
-        super(0);
+        super(-1);
         this.name = name;
     }
 

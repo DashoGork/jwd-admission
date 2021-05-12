@@ -7,15 +7,16 @@ import com.jwd_admission.byokrut.controller.Destination;
 import com.jwd_admission.byokrut.dao.impl.InformationDaoImpl;
 import com.jwd_admission.byokrut.dao.impl.RequestDaoImpl;
 import com.jwd_admission.byokrut.dao.impl.UserDaoImpl;
+import com.jwd_admission.byokrut.entity.Request;
 import com.jwd_admission.byokrut.entity.User;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.jwd_admission.byokrut.controller.ServiceDestination.MAIN_PAGE;
-import static com.jwd_admission.byokrut.controller.pagesController.MainServlet.COMMAND;
 
-public class UserDeleteCommand implements Command {
+public class AdminCalculateCommand implements Command {
     InformationDaoImpl informationDao = new InformationDaoImpl();
     UserDaoImpl userDao = new UserDaoImpl();
     RequestDaoImpl requestDao = new RequestDaoImpl();
@@ -35,25 +36,15 @@ public class UserDeleteCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        int id = -1;
-        String idFromRequet;
-        String commandName = request.getParameter(COMMAND);
-        String commandName1 = request.getParameter("id");
-        String pattern = "(id=\\d+)";
-        Pattern.compile(pattern).matcher(commandName).find();
-        Matcher matcher = Pattern.compile(pattern).matcher(commandName);
-        if (matcher.find()) {
-            idFromRequet = matcher.group();
-            id = Integer.parseInt(idFromRequet.substring(3));
-            System.out.println(id);
+        List<Request> requestList=requestDao.findAllPassedInAllFacultets();
+        List<User> userList=new ArrayList<>();
+        for (Request userRequest :requestList) {
+            User user =userDao.findEntityById(userRequest.getUserId());
+            User.copyAllNotNullFields(user,informationDao.findEntityById(user.getInfId()));
+            userList.add(user);
         }
-        User user = userDao.findEntityById(id);
-        requestDao.delete(id);
-        userDao.delete(id);
-        informationDao.delete(user.getInfId());
-
-
+        final HttpSession session = request.createSession();
+        session.setAttribute("listOfPassed", userList);
         return COMMAND_RESPONSE;
-
     }
 }

@@ -12,7 +12,8 @@ public enum CommandInstance {
     SHOW_EDIT(new ShowEditPageCommand()),
     EDIT(new UserEditCommand()),
     APPROVE(new UserApproveCommand()),
-    DELETE(new UserDeleteCommand());
+    DELETE(new UserDeleteCommand()),
+    CALCULATE(new AdminCalculateCommand());
 
     private final Command command;
 

@@ -19,11 +19,11 @@ public class User extends BaseEntity {
     private int infId;
 
     public User() {
-        super(0);
+        super(-1);
     }
 
     public User(String firstName, String middleName, String lastName, String passportId, int infId) {
-        super(0);
+        super(-1);
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
@@ -66,7 +66,7 @@ public class User extends BaseEntity {
 
     public static void copyAllNotNullFields(User to, User from){
         try{
-            if(from.getId()!=0)
+            if(from.getId()!=-1)
                 to.setId(from.getId());
             for (Field field : from.getClass().getDeclaredFields()) {
                 field.setAccessible(true);
@@ -87,6 +87,7 @@ public class User extends BaseEntity {
         } ///what if error has happened before .setAccessible(false)?
     }
 
+    @Override
     public int getId() {
         return super.getId();
     }
@@ -135,6 +136,7 @@ public class User extends BaseEntity {
         this.infId = infId;
     }
 
+    @Override
     public void setId(int id) {
         super.setId(id);
     }

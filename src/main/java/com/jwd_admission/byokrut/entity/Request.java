@@ -9,7 +9,7 @@ public class Request extends BaseEntity {
     private int approved = 0;
 
     public Request(int userId) {
-        super(0);
+        super(-1);
         this.userId=userId;
     }
 

@@ -6,6 +6,7 @@ import com.jwd_admission.byokrut.controller.CommandResponse;
 import com.jwd_admission.byokrut.dao.impl.FacultyDaoImpl;
 import com.jwd_admission.byokrut.entity.Faculty;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 import static com.jwd_admission.byokrut.controller.ServiceDestination.MAIN_PAGE;
@@ -16,7 +17,9 @@ public class ShowMainPageCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
         List<Faculty> faculties = facultyDao.findAll();
-        request.setAttribute("allFaculties", faculties);
+
+        final HttpSession session = request.createSession();
+        session.setAttribute("allFaculties", faculties);
         return () -> MAIN_PAGE;
     }
 

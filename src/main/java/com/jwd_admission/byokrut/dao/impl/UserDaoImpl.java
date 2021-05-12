@@ -39,7 +39,7 @@ public class UserDaoImpl implements UserDao {
             while (rs.next()) {
                 String login = rs.getString("login");
                 String password = rs.getString("password");
-                Integer infId = rs.getInt("information_id");
+                int infId = rs.getInt("information_id");
                 user = new User(id, login, password, infId);
             }
         } catch (SQLException e) {
@@ -51,13 +51,13 @@ public class UserDaoImpl implements UserDao {
     public User findEntityByInfId(Integer infId) {
         User user = null;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_INF_ID);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_INF_ID)) {
             preparedStatement.setInt(1, infId);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 String login = rs.getString("login");
                 String password = rs.getString("password");
-                Integer id = rs.getInt("id");
+                int id = rs.getInt("id");
                 user = new User(id, login, password, infId);
             }
         } catch (SQLException e) {
@@ -70,7 +70,7 @@ public class UserDaoImpl implements UserDao {
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS)) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -88,7 +88,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean delete(User user) {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER)) {
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.executeUpdate();
             return true;
@@ -102,7 +102,7 @@ public class UserDaoImpl implements UserDao {
     public boolean delete(Integer id) {
         boolean rowDeleted = false;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(DELETE_USER);) {
+             PreparedStatement statement = connection.prepareStatement(DELETE_USER)) {
             statement.setInt(1, id);
             rowDeleted = statement.executeUpdate() > 0;
         } catch (SQLException throwables) {
@@ -114,7 +114,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean create(User user) {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(CREATE_USER);) {
+             PreparedStatement statement = connection.prepareStatement(CREATE_USER)) {
             statement.setString(1, user.getLogin());
             statement.setString(2, user.getPassword());
             statement.setInt(3, user.getInfId());
@@ -134,7 +134,7 @@ public class UserDaoImpl implements UserDao {
     public boolean updateUser(User user) {
         boolean rowUpdated = false;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(UPDATE_USER_BY_ID);) {
+             PreparedStatement statement = connection.prepareStatement(UPDATE_USER_BY_ID)) {
             statement.setString(1, user.getLogin());
             statement.setString(2, user.getPassword());
             statement.setInt(3, user.getId());
@@ -147,7 +147,7 @@ public class UserDaoImpl implements UserDao {
 
     public int findUserId(User user) {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SELECT_USER_ID_BY_LOGIN);) {
+             PreparedStatement statement = connection.prepareStatement(SELECT_USER_ID_BY_LOGIN)) {
             statement.setString(1, user.getLogin());
             statement.execute();
             ResultSet res = statement.getResultSet();
@@ -161,7 +161,7 @@ public class UserDaoImpl implements UserDao {
 
     public int findUserByLoginAndPassword(User user) {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SELECT_USER_BY_LOGIN_AND_PASSWORD);) {
+             PreparedStatement statement = connection.prepareStatement(SELECT_USER_BY_LOGIN_AND_PASSWORD)) {
             statement.setString(1, user.getLogin());
             statement.setString(2, user.getPassword());
             statement.execute();
@@ -176,7 +176,7 @@ public class UserDaoImpl implements UserDao {
 
     public int findUserRoleId(User user) {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_ROLE_ID);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_ROLE_ID)) {
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.execute();

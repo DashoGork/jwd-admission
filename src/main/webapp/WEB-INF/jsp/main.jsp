@@ -22,16 +22,16 @@ ${role}
 <table class="table table-bordered">
     <thead>
     <tr>
-        <th>login</th>
-        <th>password</th>
-        <th>Email</th>
-        <th>Country</th>
-        <th>Actions</th>
-        <th>Actions</th>
+        <th>Факультет</th>
+        <th>Предмет</th>
+        <th>Предмет</th>
+        <th>Предмет</th>
+        <th>Набор</th>
     </tr>
     </thead>
     <tbody>
-    <!--   for (Todo todo: todos) {  -->
+
+    <c:if test="${allFaculties==null? ShowMainPageCommand(): 2}"></c:if>
     <c:forEach var="faculty" items="${allFaculties}"
     >
     <tr>
@@ -52,5 +52,14 @@ ${role}
         </td>
     </tr>
     </c:forEach>
+
+    <c:if test="${listOfPassed!=null}">
+    <c:forEach var="user" items="${listOfPassed}">
+    <p><strong>Name:</strong> ${user.firstName}</p>
+    <p><strong>Фамилия:</strong> ${user.lastName}</p>
+    <p><strong>Отчество:</strong> ${user.middleName}</p>
+    <p><strong>Номер паспорта:</strong> ${user.passportId}</p>
+    </c:forEach>
+    </c:if>
 </body>
 </html>

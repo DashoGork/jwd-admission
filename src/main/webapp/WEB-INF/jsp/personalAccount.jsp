@@ -23,6 +23,7 @@
 
     <a href="?command=approve?id=${user.id}">Approve</a>
     <a href="?command=delete?id=${user.id}">Delete</a></td>
+    <a href="?command=calculate">Calculate</a></td>
 </c:forEach>
 </c:if>
 <c:if test="${user!=null}">

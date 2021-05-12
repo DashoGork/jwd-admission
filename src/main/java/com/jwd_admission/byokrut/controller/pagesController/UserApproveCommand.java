@@ -33,6 +33,10 @@ public class UserApproveCommand implements Command {
         int id = -1;
         String idFromRequet;
         String commandName = request.getParameter(COMMAND);
+
+
+        String commandName1 = request.getParameter("id");
+        System.out.println(commandName1);
         String pattern = "(id=\\d+)";
         Pattern.compile(pattern).matcher(commandName).find();
         Matcher matcher = Pattern.compile(pattern).matcher(commandName);

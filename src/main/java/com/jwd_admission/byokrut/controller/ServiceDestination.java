@@ -1,8 +1,6 @@
 package com.jwd_admission.byokrut.controller;
 
-public enum
-
-ServiceDestination implements Destination {
+public enum ServiceDestination implements Destination {
     MAIN_PAGE("/WEB-INF/jsp/main.jsp"),
     LOGIN_PAGE("/WEB-INF/jsp/signIn.jsp"),
     REGISTRATION_PAGE("/WEB-INF/jsp/registration.jsp"),
