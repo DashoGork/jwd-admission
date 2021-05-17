@@ -5,7 +5,7 @@ import com.jwd_admission.byokrut.entity.Request;
 import java.util.List;
 
 public interface RequestDao extends BaseDao<Integer, Request> {
-    boolean approve(int UserId);
+    boolean approve(int userId);
 
     List<Request> findAllPassed(int facultyId);
 

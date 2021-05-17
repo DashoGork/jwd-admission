@@ -50,24 +50,6 @@ public class InformationDaoImpl implements InformationDao {
         return user;
     }
 
-//    public User findEntityByIdAndLogIntoFile(Integer id) {
-//        User user = null;
-//        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-//             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_INF_BY_ID_AND_LOG)) {
-//            preparedStatement.setInt(1, id);
-//            ResultSet rs = preparedStatement.executeQuery();
-//            rs.next();//!!
-//            String name = rs.getString("name");
-//            String middlename = rs.getString("middlename");
-//            String lastname = rs.getString("lastname");
-//            String passportId = rs.getString("passport_id");
-//            int infId = rs.getInt("id");
-//            user = new User(name, middlename, lastname, passportId, infId);
-//        } catch (SQLException e) {
-//            logger.error(e);
-//        }
-//        return user;
-//    }
 
     @Override
     public List<User> findAll() {

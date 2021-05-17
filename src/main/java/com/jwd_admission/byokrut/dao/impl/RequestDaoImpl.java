@@ -26,6 +26,8 @@ public class RequestDaoImpl implements RequestDao {
     private static final String SELECT_REQUESTS = "select user_id,score from request where faculty_id=? AND approved=1 order by score DESC LIMIT ?;";
     private static FacultyDaoImpl facultyDao = new FacultyDaoImpl();
 
+    private static final String userId="user_id";
+
     @Override
     public Request findEntityById(Integer id) {
         Request request = null;

@@ -37,6 +37,7 @@ public class AdminCalculateCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
+        String pathname="C:\\Users\\Юзер\\Documents\\GitHub\\jwd-admission\\src\\main\\java\\output\\passed.ser";
         List<Request> requestList = requestDao.findAllPassedInAllFacultets();
         List<User> userList = new ArrayList<>();
         for (Request userRequest : requestList) {
@@ -45,7 +46,7 @@ public class AdminCalculateCommand implements Command {
             userList.add(user);
         }
 
-        File output = new File("C:\\Users\\Юзер\\Documents\\GitHub\\jwd-admission\\src\\main\\java\\output\\passed.ser");
+        File output = new File(pathname);
         try (FileOutputStream outputStream = new FileOutputStream(output);
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)) {
             if (!output.exists()) {
