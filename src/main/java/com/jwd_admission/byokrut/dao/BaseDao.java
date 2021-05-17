@@ -10,13 +10,9 @@ import java.sql.Statement;
 import java.util.List;
 
 public interface BaseDao<K, T extends BaseEntity> {
-    Logger logger = LogManager.getLogger();
-
     T findEntityById(K id);
 
     List<T> findAll();
-
-    boolean delete(T t);
 
     boolean delete(K id);
 

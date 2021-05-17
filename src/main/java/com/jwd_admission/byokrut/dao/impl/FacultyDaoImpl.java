@@ -37,25 +37,26 @@ public class FacultyDaoImpl implements FacultyDao {
         Faculty faculty = new Faculty(id);
         faculty.setSubjects(findSubjectInf(id));
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FACULTY_BY_ID_FROM_FACULTY);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FACULTY_BY_ID_FROM_FACULTY)) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                Integer numberOfStudents = rs.getInt("number_of_students");
-                String name = rs.getString("name");
-                faculty.setName(name);
-                faculty.setNumberOfStudents(numberOfStudents);
-            }
+            rs.next();//!!
+            int numberOfStudents = rs.getInt("number_of_students");
+            String name = rs.getString("name");
+            faculty.setName(name);
+            faculty.setNumberOfStudents(numberOfStudents);
+
         } catch (SQLException e) {
             logger.error(e);
         }
         return faculty;
     }
 
+    @Override
     public List<Faculty> selectAllFacultiesId() {
         List<Faculty> faculties = new ArrayList<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_FACULTUES_ID);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_FACULTUES_ID)) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -70,11 +71,11 @@ public class FacultyDaoImpl implements FacultyDao {
     private ArrayList<Subject> findSubjectInf(Integer facultyId) {
         ArrayList<Subject> subjects = new ArrayList<>(3);
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_SUBJECT_ID_NAME_BY_FACULTY_ID_FROM_FAC_SUB);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_SUBJECT_ID_NAME_BY_FACULTY_ID_FROM_FAC_SUB)) {
             preparedStatement.setInt(1, facultyId);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                Integer subjectId = rs.getInt("subject_id");
+                int subjectId = rs.getInt("subject_id");
                 String name = rs.getString("name");
                 subjects.add(new Subject(subjectId, name));
             }
@@ -89,7 +90,7 @@ public class FacultyDaoImpl implements FacultyDao {
     public List<Faculty> findAll() {
         List<Faculty> faculties = new ArrayList<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_FACULTUES);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_FACULTUES)) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -99,11 +100,6 @@ public class FacultyDaoImpl implements FacultyDao {
             logger.error(e);
         }
         return faculties;
-    }
-
-    @Override
-    public boolean delete(Faculty faculty) {
-        return false;
     }
 
     @Override

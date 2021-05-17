@@ -33,33 +33,32 @@ public class UserDaoImpl implements UserDao {
     public User findEntityById(Integer id) {
         User user = null;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID)) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                String login = rs.getString("login");
-                String password = rs.getString("password");
-                int infId = rs.getInt("information_id");
-                user = new User(id, login, password, infId);
-            }
+            rs.next();//!!
+            String login = rs.getString("login");
+            String password = rs.getString("password");
+            int infId = rs.getInt("information_id");
+            user = new User(id, login, password, infId);
         } catch (SQLException e) {
             logger.error(e);
         }
         return user;
     }
 
-    public User findEntityByInfId(Integer infId) {
+    @Override
+    public User findUserByInfId(Integer infId) {
         User user = null;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_INF_ID)) {
             preparedStatement.setInt(1, infId);
             ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                String login = rs.getString("login");
-                String password = rs.getString("password");
-                int id = rs.getInt("id");
-                user = new User(id, login, password, infId);
-            }
+            rs.next();//!
+            String login = rs.getString("login");
+            String password = rs.getString("password");
+            int id = rs.getInt("id");
+            user = new User(id, login, password, infId);
         } catch (SQLException e) {
             logger.error(e);
         }
@@ -83,19 +82,6 @@ public class UserDaoImpl implements UserDao {
             logger.error(e);
         }
         return users;
-    }
-
-    @Override
-    public boolean delete(User user) {
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER)) {
-            preparedStatement.setString(1, user.getLogin());
-            preparedStatement.executeUpdate();
-            return true;
-        } catch (SQLException throwables) {
-            logger.error(throwables);
-        }
-        return false;
     }
 
     @Override
@@ -145,6 +131,7 @@ public class UserDaoImpl implements UserDao {
         return rowUpdated;
     }
 
+    @Override
     public int findUserId(User user) {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(SELECT_USER_ID_BY_LOGIN)) {
@@ -159,6 +146,7 @@ public class UserDaoImpl implements UserDao {
         return -1;
     }
 
+    @Override
     public int findUserByLoginAndPassword(User user) {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(SELECT_USER_BY_LOGIN_AND_PASSWORD)) {
@@ -174,6 +162,7 @@ public class UserDaoImpl implements UserDao {
         return -1;
     }
 
+    @Override
     public int findUserRoleId(User user) {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_ROLE_ID)) {
@@ -189,6 +178,7 @@ public class UserDaoImpl implements UserDao {
         return -1;
     }
 
+    @Override
     public boolean userExist(User user) {
         return (findUserId(user) != -1);
     }

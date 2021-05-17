@@ -33,14 +33,13 @@ public class RequestDaoImpl implements RequestDao {
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_REQUEST_BY_USER_ID);) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                int requestId = rs.getInt("id");
-                int facultyId = rs.getInt("faculty_id");
-                int score = rs.getInt("score");
-                int approved = rs.getInt("approved");
-                int userId = rs.getInt("user_id");
-                request = new Request(requestId, facultyId, userId, score, approved);
-            }
+            rs.next(); //!!
+            int requestId = rs.getInt("id");
+            int facultyId = rs.getInt("faculty_id");
+            int score = rs.getInt("score");
+            int approved = rs.getInt("approved");
+            int userId = rs.getInt("user_id");
+            request = new Request(requestId, facultyId, userId, score, approved);
         } catch (SQLException throwables) {
             logger.error(throwables);
         }
@@ -54,11 +53,11 @@ public class RequestDaoImpl implements RequestDao {
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_REQUESTS)) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                Integer id = rs.getInt("id");
-                Integer facultyId = rs.getInt("faculty_id");
-                Integer userId = rs.getInt("user_id");
-                Integer score = rs.getInt("score");
-                Integer approved = rs.getInt("approved");
+                int id = rs.getInt("id");
+                int facultyId = rs.getInt("faculty_id");
+                int userId = rs.getInt("user_id");
+                int score = rs.getInt("score");
+                int approved = rs.getInt("approved");
                 requests.add(new Request(id, facultyId, userId, score, approved));
             }
         } catch (SQLException e) {
@@ -67,6 +66,7 @@ public class RequestDaoImpl implements RequestDao {
         return requests;
     }
 
+    @Override
     public List<Request> findAllPassed(int facultyId) {
         List<Request> requests = new ArrayList<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -75,9 +75,9 @@ public class RequestDaoImpl implements RequestDao {
             preparedStatement.setInt(2, facultyDao.findEntityById(facultyId).getNumberOfStudents());
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                Integer userId = rs.getInt("user_id");
-                Integer score = rs.getInt("score");
-                requests.add(new Request( facultyId, userId, score));
+                int userId = rs.getInt("user_id");
+                int score = rs.getInt("score");
+                requests.add(new Request(facultyId, userId, score));
             }
         } catch (SQLException e) {
             logger.error(e);
@@ -85,6 +85,7 @@ public class RequestDaoImpl implements RequestDao {
         return requests;
     }
 
+    @Override
     public List<Request> findAllPassedInAllFacultets() {
         List<Request> requests = new ArrayList<>();
         List<Faculty> faculties = facultyDao.selectAllFacultiesId();
@@ -95,14 +96,9 @@ public class RequestDaoImpl implements RequestDao {
     }
 
     @Override
-    public boolean delete(Request request) {
-        return false;
-    }
-
-    @Override
     public boolean delete(Integer id) {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_REQUEST_BY_USER_ID);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_REQUEST_BY_USER_ID)) {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
             return true;
@@ -130,7 +126,7 @@ public class RequestDaoImpl implements RequestDao {
     @Override
     public Request update(Request request) {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_REQUEST);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_REQUEST)) {
             preparedStatement.setInt(1, request.getScore());
             preparedStatement.setInt(2, request.getFacultyId());
             preparedStatement.setInt(3, request.getUserId());
@@ -145,7 +141,7 @@ public class RequestDaoImpl implements RequestDao {
     @Override
     public boolean approve(int userId) {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(APPROVE_REQUEST);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(APPROVE_REQUEST)) {
             preparedStatement.setInt(1, userId);
             int result = preparedStatement.executeUpdate();
             return (result == 1);
@@ -158,7 +154,7 @@ public class RequestDaoImpl implements RequestDao {
     public List<Request> findAllWithoutApproved(List<User> list) {
         List<Request> requests = new ArrayList<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_REQUEST_BY_USER_ID);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_REQUEST_BY_USER_ID)) {
             for (User user : list) {
                 preparedStatement.setInt(1, user.getId());
                 ResultSet rs = preparedStatement.executeQuery();
@@ -176,12 +172,13 @@ public class RequestDaoImpl implements RequestDao {
         return requests;
     }
 
-    public Request findRequestByUser(User user) {
+    @Override
+    public Request findRequestByUser(int userId) {
         Request request = null;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_REQUEST_BY_USER_ID);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_REQUEST_BY_USER_ID)) {
 
-            preparedStatement.setInt(1, user.getId());
+            preparedStatement.setInt(1, userId);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");

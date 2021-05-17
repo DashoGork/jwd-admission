@@ -3,7 +3,6 @@ package com.jwd_admission.byokrut.controller.pagesController;
 import com.jwd_admission.byokrut.controller.Command;
 import com.jwd_admission.byokrut.controller.CommandRequest;
 import com.jwd_admission.byokrut.controller.CommandResponse;
-import com.jwd_admission.byokrut.controller.Destination;
 import com.jwd_admission.byokrut.dao.impl.InformationDaoImpl;
 import com.jwd_admission.byokrut.dao.impl.RequestDaoImpl;
 import com.jwd_admission.byokrut.dao.impl.UserDaoImpl;
@@ -21,19 +20,6 @@ public class ShowEditPageCommand implements Command {
     private InformationDaoImpl informationDao = new InformationDaoImpl();
     private RequestDaoImpl requestDao = new RequestDaoImpl();
 
-    public static final CommandResponse COMMAND_RESPONSE = new CommandResponse() {
-        @Override
-        public boolean isRedirect() {
-            return false;
-        }
-
-        @Override
-        public Destination getDestination() {
-            return EDIT_PAGE;
-        }
-
-    };
-
     @Override
     public CommandResponse execute(CommandRequest request) {
         int id = -1;
@@ -45,11 +31,10 @@ public class ShowEditPageCommand implements Command {
         if (matcher.find()) {
             idFromRequet = matcher.group();
             id = Integer.parseInt(idFromRequet.substring(3));
-            System.out.println(id);
         }
         User user = userDao.findEntityById(id);
         User.copyAllNotNullFields(user, informationDao.findEntityById(user.getInfId()));
-        Request userRequest = requestDao.findRequestByUser(user);
+        Request userRequest = requestDao.findRequestByUser(user.getId());
         request.setAttribute("req", userRequest);
         request.setAttribute("user", user);
         return () -> EDIT_PAGE;

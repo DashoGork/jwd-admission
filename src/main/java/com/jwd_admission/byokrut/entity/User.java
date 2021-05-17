@@ -3,12 +3,13 @@ package com.jwd_admission.byokrut.entity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Objects;
 
-public class User extends BaseEntity {
+public class User extends BaseEntity implements Serializable {
 
-
+    private static final long serialVersionUID = 1L;
     private String login;
     private String password;
     private int roleId;
@@ -72,7 +73,7 @@ public class User extends BaseEntity {
                 field.setAccessible(true);
                 String name = field.getName();
                 Object value = field.get(from);
-                if (null != value)
+                if (null != value & !name.equals("serialVersionUID"))
                 {
                     Field destField = to.getClass().getDeclaredField(name);
                     destField.setAccessible(true);

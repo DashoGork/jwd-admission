@@ -12,7 +12,7 @@
 </head>
 <body>
 <div align="center">
-    <form action="<%= request.getContextPath() %>/home?command=registration" method="post">
+    <form accept-charset="UTF-8" action="<%= request.getContextPath() %>/home?command=registration" method="post">
         <table style="with: 80%">
             <tr>
                 <td>Login</td>
@@ -45,17 +45,17 @@
 
                     <option value="1">MMF</option>
                     <option value="2">FIZ</option>
-                    <option value="3">Black</option>
-
+                    <option value="3">FMO</option>
+                    <option value="4">BIO</option>
                 </select>
 
             </tr>
             <tr>
                 <td>Score</td>
-                <td><input type="number" name="score_1"  id="score_1" value="${score_1}" placeholder="Enter Login" required></td>
-                <td><input type="number" name="score_2"  id="score_2" value="${score_2}" placeholder="Enter Login" required></td>
-                <td><input type="number" name="score_3"  id="score_3" value="${score_3}" placeholder="Enter Login" required></td>
-                <td><input type="number" name="score_4"  id="score_4" value="${score_4}" placeholder="Enter Login" required></td>
+                <td><input type="number" name="score_1"  id="score_1" value="${score_1}" min="1" max="100" placeholder="Enter Login" required></td>
+                <td><input type="number" name="score_2"  id="score_2" value="${score_2}" min="1" max="100" placeholder="Enter Login" required></td>
+                <td><input type="number" name="score_3"  id="score_3" value="${score_3}" min="1" max="100" placeholder="Enter Login" required></td>
+                <td><input type="number" name="score_4"  id="score_4" value="${score_4}" min="1" max="100" placeholder="Enter Login" required></td>
             </tr>
         </table>
         <input type="submit" value="Enter" />

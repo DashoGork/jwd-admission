@@ -11,6 +11,7 @@ import com.jwd_admission.byokrut.entity.Request;
 import com.jwd_admission.byokrut.entity.User;
 
 import javax.servlet.http.HttpSession;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,13 +37,25 @@ public class AdminCalculateCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        List<Request> requestList=requestDao.findAllPassedInAllFacultets();
-        List<User> userList=new ArrayList<>();
-        for (Request userRequest :requestList) {
-            User user =userDao.findEntityById(userRequest.getUserId());
-            User.copyAllNotNullFields(user,informationDao.findEntityById(user.getInfId()));
+        List<Request> requestList = requestDao.findAllPassedInAllFacultets();
+        List<User> userList = new ArrayList<>();
+        for (Request userRequest : requestList) {
+            User user = userDao.findEntityById(userRequest.getUserId());
+            User.copyAllNotNullFields(user, informationDao.findEntityById(user.getInfId()));
             userList.add(user);
         }
+
+        File output = new File("C:\\Users\\Юзер\\Documents\\GitHub\\jwd-admission\\src\\main\\java\\output\\passed.ser");
+        try (FileOutputStream outputStream = new FileOutputStream(output);
+             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)) {
+            if (!output.exists()) {
+                output.createNewFile();
+            }
+            objectOutputStream.writeObject(userList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         final HttpSession session = request.createSession();
         session.setAttribute("listOfPassed", userList);
         return COMMAND_RESPONSE;

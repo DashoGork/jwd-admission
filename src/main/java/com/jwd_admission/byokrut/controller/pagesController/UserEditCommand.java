@@ -10,6 +10,7 @@ import com.jwd_admission.byokrut.dao.impl.UserDaoImpl;
 import com.jwd_admission.byokrut.entity.Request;
 import com.jwd_admission.byokrut.entity.User;
 
+
 import static com.jwd_admission.byokrut.controller.ServiceDestination.MAIN_PAGE;
 
 public class UserEditCommand implements Command {
@@ -33,7 +34,6 @@ public class UserEditCommand implements Command {
     @Override
     public CommandResponse execute(CommandRequest request) {
 
-        String login = (String) request.getRequestParameter("login");
         String password = (String) request.getRequestParameter("password");
         int id = Integer.parseInt((String) request.getRequestParameter("id"));
         String name = request.getParameter("name");

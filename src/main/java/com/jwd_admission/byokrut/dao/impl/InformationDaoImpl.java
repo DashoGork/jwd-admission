@@ -34,35 +34,53 @@ public class InformationDaoImpl implements InformationDao {
     public User findEntityById(Integer id) {
         User user = null;
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_INF_BY_ID);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_INF_BY_ID)) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                String name = rs.getString("name");
-                String middlename = rs.getString("middlename");
-                String lastname = rs.getString("lastname");
-                String passportId = rs.getString("passport_id");
-                Integer infId = rs.getInt("id");
-                user = new User(name, middlename, lastname, passportId, infId);
-            }
+            rs.next();//!!
+            String name = rs.getString("name");
+            String middlename = rs.getString("middlename");
+            String lastname = rs.getString("lastname");
+            String passportId = rs.getString("passport_id");
+            int infId = rs.getInt("id");
+            user = new User(name, middlename, lastname, passportId, infId);
         } catch (SQLException e) {
             logger.error(e);
         }
         return user;
     }
 
+//    public User findEntityByIdAndLogIntoFile(Integer id) {
+//        User user = null;
+//        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+//             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_INF_BY_ID_AND_LOG)) {
+//            preparedStatement.setInt(1, id);
+//            ResultSet rs = preparedStatement.executeQuery();
+//            rs.next();//!!
+//            String name = rs.getString("name");
+//            String middlename = rs.getString("middlename");
+//            String lastname = rs.getString("lastname");
+//            String passportId = rs.getString("passport_id");
+//            int infId = rs.getInt("id");
+//            user = new User(name, middlename, lastname, passportId, infId);
+//        } catch (SQLException e) {
+//            logger.error(e);
+//        }
+//        return user;
+//    }
+
     @Override
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_INF);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_INF)) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 String name = rs.getString("name");
                 String middlename = rs.getString("middlename");
                 String lastname = rs.getString("lastname");
                 String passportId = rs.getString("passport_id");
-                Integer infId = rs.getInt("id");
+                int infId = rs.getInt("id");
                 users.add(new User(name, middlename, lastname, passportId, infId));
             }
         } catch (SQLException e) {
@@ -71,23 +89,11 @@ public class InformationDaoImpl implements InformationDao {
         return users;
     }
 
-    @Override
-    public boolean delete(User user) {
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER_INF);) {
-            preparedStatement.setString(1, user.getPassportId());
-            preparedStatement.executeUpdate();
-            return true;
-        } catch (SQLException throwables) {
-            logger.error(throwables);
-        }
-        return false;
-    }
 
     @Override
     public boolean delete(Integer id) {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER_INF_BY_ID);) {
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER_INF_BY_ID)) {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
             return true;
@@ -100,13 +106,13 @@ public class InformationDaoImpl implements InformationDao {
     @Override
     public boolean create(User user) {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement1 = connection.prepareStatement(CREATE_USER_INF);) {
+             PreparedStatement preparedStatement1 = connection.prepareStatement(CREATE_USER_INF)) {
             preparedStatement1.setString(1, user.getFirstName());
             preparedStatement1.setString(2, user.getMiddleName());
             preparedStatement1.setString(3, user.getLastName());
             preparedStatement1.setString(4, user.getPassportId());
             preparedStatement1.executeUpdate();
-            user.setInfId(findUserInformationIdByPassportId(user));
+            user.setInfId(findUserInformationIdByPassportId(user.getPassportId()));
             return true;
         } catch (SQLException throwables) {
             logger.error(throwables);
@@ -117,14 +123,14 @@ public class InformationDaoImpl implements InformationDao {
     @Override
     public User update(User user) {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement preparedStatement1 = connection.prepareStatement(UPDATE_USER_INF_BY_ID);) {
+             PreparedStatement preparedStatement1 = connection.prepareStatement(UPDATE_USER_INF_BY_ID)) {
             preparedStatement1.setString(1, user.getFirstName());
             preparedStatement1.setString(2, user.getLastName());
             preparedStatement1.setString(3, user.getMiddleName());
             preparedStatement1.setString(4, user.getPassportId());
-            preparedStatement1.setInt(5,user.getInfId());
+            preparedStatement1.setInt(5, user.getInfId());
             preparedStatement1.executeUpdate();
-            user=(findEntityById(user.getInfId()));
+            user = (findEntityById(user.getInfId()));
         } catch (SQLException throwables) {
             logger.error(throwables);
         }
@@ -132,13 +138,13 @@ public class InformationDaoImpl implements InformationDao {
     }
 
     @Override
-    public int findUserInformationIdByPassportId(User user) {
+    public int findUserInformationIdByPassportId(String passportId) {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_INFORMATION_ID_BY_PASSPORT_ID)) {
-            preparedStatement.setString(1, user.getPassportId());
+            preparedStatement.setString(1, passportId);
             preparedStatement.execute();
             ResultSet resultSet = preparedStatement.getResultSet();
-             return ((resultSet.next())?resultSet.getInt("id"):-1);
+            return ((resultSet.next()) ? resultSet.getInt("id") : -1);
         } catch (SQLException throwables) {
             logger.error(throwables);
         }
@@ -147,6 +153,6 @@ public class InformationDaoImpl implements InformationDao {
 
     @Override
     public boolean userInfExist(User user) {
-        return (findUserInformationIdByPassportId(user) != -1);
+        return (findUserInformationIdByPassportId(user.getPassportId()) != -1);
     }
 }

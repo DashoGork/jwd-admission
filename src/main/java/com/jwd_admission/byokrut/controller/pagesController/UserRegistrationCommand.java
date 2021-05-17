@@ -60,13 +60,13 @@ public class UserRegistrationCommand implements Command {
                         session.setAttribute("role", 2);
 
                     } else {
-                        informationDao.delete(user);
-                        userDao.delete(user);
+                        informationDao.delete(user.getInfId());
+                        userDao.delete(user.getId());
                         //errorpage
                     }
                 } else {
-                    informationDao.delete(user);
-
+                    informationDao.delete(user.getInfId());
+                    //!!!!!!
                 }
             } else {
 
