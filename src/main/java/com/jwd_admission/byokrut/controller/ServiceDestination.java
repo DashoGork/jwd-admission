@@ -12,7 +12,6 @@ public enum ServiceDestination implements Destination {
     private final String path;
     private static final String BASE_URL = "/WEB-INF/jsp";
 
-
     ServiceDestination(String path) {
         this.path = path;
     }
@@ -21,6 +20,4 @@ public enum ServiceDestination implements Destination {
     public String getPath() {
         return path;
     }
-
-
 }

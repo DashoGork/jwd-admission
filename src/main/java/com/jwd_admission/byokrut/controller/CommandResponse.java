@@ -5,7 +5,5 @@ public interface CommandResponse {
     default boolean isRedirect() {
         return false;
     }
-
     Destination getDestination();
-
 }

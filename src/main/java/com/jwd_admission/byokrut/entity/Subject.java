@@ -1,8 +1,6 @@
 package com.jwd_admission.byokrut.entity;
 
-import java.util.Objects;
-
-public class Subject extends BaseEntity{
+public class Subject extends BaseEntity {
     private String name;
 
     public Subject(int id) {

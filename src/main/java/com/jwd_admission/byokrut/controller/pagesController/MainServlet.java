@@ -25,15 +25,9 @@ public class MainServlet extends HttpServlet {
 
         Command command = Command.of(commandName);
         final CommandResponse execute = command.execute(new CommandRequest() {
-
             @Override
             public String getParameter(String parameter) {
                 return request.getParameter(parameter);
-            }
-
-            @Override
-            public Object getAttribute(String name) {
-                return request.getAttribute(name);
             }
 
             @Override
@@ -72,7 +66,6 @@ public class MainServlet extends HttpServlet {
         }
         Command command = Command.of(commandName);
         final CommandResponse execute = command.execute(new CommandRequest() {
-
             @Override
             public String getParameter(String parameter) {
                 return req.getParameter(parameter);
@@ -81,11 +74,6 @@ public class MainServlet extends HttpServlet {
             @Override
             public void setAttribute(String name, Object object) {
                 req.setAttribute(name, object);
-            }
-
-            @Override
-            public Object getAttribute(String name) {
-                return req.getAttribute(name);
             }
 
             @Override

@@ -17,19 +17,10 @@ import java.util.List;
 public class FacultyDaoImpl implements FacultyDao {
     private static final Logger logger = LogManager.getLogger();
 
-    private static final String SELECT_FACULTY_ID_BY_NAME = "SELECT id FROM faculty WHERE name=?;";
-
     private static final String SELECT_ALL_FACULTUES = "SELECT * FROM faculty";
     private static final String SELECT_ALL_FACULTUES_ID = "SELECT id FROM faculty";
-    private static final String SELECT_FACULTY_BY_ID_FROM_FACULTY_SUB = "SELECT * FROM faculty_subject WHERE faculty_id=?";
     private static final String SELECT_FACULTY_BY_ID_FROM_FACULTY = "SELECT * FROM faculty WHERE id=?";
     private static final String SELECT_SUBJECT_ID_NAME_BY_FACULTY_ID_FROM_FAC_SUB = "select name, subject_id from subject inner join faculty_subject fs on subject.id = fs.subject_id where faculty_id=?";
-
-
-    private static final String DELETE_FACULTY_BY_ID = "DELETE FROM faculty WHERE id=?;";
-    private static final String DELETE_FACULTY_BY_NAME = "DELETE FROM faculty WHERE name=?;";
-
-    private static final String UPDATE_FACULTY_BY_ID = "UPDATE FROM faculty WHERE id=?;";
 
 
     @Override
@@ -40,7 +31,7 @@ public class FacultyDaoImpl implements FacultyDao {
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FACULTY_BY_ID_FROM_FACULTY)) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-            rs.next();//!!
+            rs.next();
             int numberOfStudents = rs.getInt("number_of_students");
             String name = rs.getString("name");
             faculty.setName(name);

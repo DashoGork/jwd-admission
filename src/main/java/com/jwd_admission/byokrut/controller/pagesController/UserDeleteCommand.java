@@ -38,22 +38,18 @@ public class UserDeleteCommand implements Command {
         int id = -1;
         String idFromRequet;
         String commandName = request.getParameter(COMMAND);
-        String commandName1 = request.getParameter("id");
         String pattern = "(id=\\d+)";
         Pattern.compile(pattern).matcher(commandName).find();
         Matcher matcher = Pattern.compile(pattern).matcher(commandName);
         if (matcher.find()) {
             idFromRequet = matcher.group();
             id = Integer.parseInt(idFromRequet.substring(3));
-            System.out.println(id);
         }
         User user = userDao.findEntityById(id);
         requestDao.delete(id);
         userDao.delete(id);
         informationDao.delete(user.getInfId());
 
-
         return COMMAND_RESPONSE;
-
     }
 }

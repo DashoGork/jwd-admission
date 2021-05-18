@@ -45,7 +45,7 @@ public class User extends BaseEntity implements Serializable {
         this.infId = infId;
     }
 
-    public User(int id, String login, String password,  String firstName, String middleName, String lastName, String passportId) {
+    public User(int id, String login, String password, String firstName, String middleName, String lastName, String passportId) {
         super(id);
         this.login = login;
         this.password = password;
@@ -55,7 +55,7 @@ public class User extends BaseEntity implements Serializable {
         this.passportId = passportId;
     }
 
-    public User( String login, String password,  String firstName, String middleName, String lastName, String passportId) {
+    public User(String login, String password, String firstName, String middleName, String lastName, String passportId) {
         super(-1);
         this.login = login;
         this.password = password;
@@ -65,16 +65,15 @@ public class User extends BaseEntity implements Serializable {
         this.passportId = passportId;
     }
 
-    public static void copyAllNotNullFields(User to, User from){
-        try{
-            if(from.getId()!=-1)
+    public static void copyAllNotNullFields(User to, User from) {
+        try {
+            if (from.getId() != -1)
                 to.setId(from.getId());
             for (Field field : from.getClass().getDeclaredFields()) {
                 field.setAccessible(true);
                 String name = field.getName();
                 Object value = field.get(from);
-                if (null != value & !name.equals("serialVersionUID"))
-                {
+                if (null != value & !name.equals("serialVersionUID")) {
                     Field destField = to.getClass().getDeclaredField(name);
                     destField.setAccessible(true);
                     destField.set(to, value);

@@ -13,7 +13,9 @@ public enum CommandInstance {
     EDIT(new UserEditCommand()),
     APPROVE(new UserApproveCommand()),
     DELETE(new UserDeleteCommand()),
-    CALCULATE(new AdminCalculateCommand());
+    CALCULATE(new AdminCalculateCommand()),
+    LANGUAGE(new LanguageChangeCommand()),
+    LOG_OUT(new UserLogOutCommand());
 
     private final Command command;
 

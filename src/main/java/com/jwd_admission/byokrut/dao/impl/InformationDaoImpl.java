@@ -15,18 +15,18 @@ import java.util.List;
 
 public class InformationDaoImpl implements InformationDao {
     private static final Logger logger = LogManager.getLogger();
+    private static final String nameField="name";
+    private static final String middlenameField="middlename";
+    private static final String lastnameField="lastname";
+    private static final String passportIdField="passport_id";
+    private static final String idField="id";
 
     private static final String SELECT_INFORMATION_ID_BY_PASSPORT_ID = "SELECT id FROM information WHERE passport_id=?;";
-
     private static final String CREATE_USER_INF = "INSERT INTO information (name, lastname," +
             "middlename, passport_id) VALUES (?,?,?,?);";
-
     private static final String SELECT_ALL_INF = "SELECT * FROM information";
     private static final String SELECT_INF_BY_ID = "SELECT * FROM information WHERE id=?";
-
-    private static final String DELETE_USER_INF = "DELETE FROM information WHERE passport_id=?;";
     private static final String DELETE_USER_INF_BY_ID = "DELETE FROM information WHERE id=?;";
-
     private static final String UPDATE_USER_INF_BY_ID = "UPDATE information SET name=?,lastname=?,middlename=?, passport_id=?" +
             " WHERE id=?;";
 
@@ -38,11 +38,11 @@ public class InformationDaoImpl implements InformationDao {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             rs.next();//!!
-            String name = rs.getString("name");
-            String middlename = rs.getString("middlename");
-            String lastname = rs.getString("lastname");
-            String passportId = rs.getString("passport_id");
-            int infId = rs.getInt("id");
+            String name = rs.getString(nameField);
+            String middlename = rs.getString(middlenameField);
+            String lastname = rs.getString(lastnameField);
+            String passportId = rs.getString(passportIdField);
+            int infId = rs.getInt(idField);
             user = new User(name, middlename, lastname, passportId, infId);
         } catch (SQLException e) {
             logger.error(e);
@@ -58,11 +58,11 @@ public class InformationDaoImpl implements InformationDao {
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_INF)) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                String name = rs.getString("name");
-                String middlename = rs.getString("middlename");
-                String lastname = rs.getString("lastname");
-                String passportId = rs.getString("passport_id");
-                int infId = rs.getInt("id");
+                String name = rs.getString(nameField);
+                String middlename = rs.getString(middlenameField);
+                String lastname = rs.getString(lastnameField);
+                String passportId = rs.getString(passportIdField);
+                int infId = rs.getInt(idField);
                 users.add(new User(name, middlename, lastname, passportId, infId));
             }
         } catch (SQLException e) {
@@ -126,7 +126,7 @@ public class InformationDaoImpl implements InformationDao {
             preparedStatement.setString(1, passportId);
             preparedStatement.execute();
             ResultSet resultSet = preparedStatement.getResultSet();
-            return ((resultSet.next()) ? resultSet.getInt("id") : -1);
+            return ((resultSet.next()) ? resultSet.getInt(idField) : -1);
         } catch (SQLException throwables) {
             logger.error(throwables);
         }

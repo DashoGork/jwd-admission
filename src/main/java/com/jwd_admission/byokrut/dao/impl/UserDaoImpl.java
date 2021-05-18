@@ -15,6 +15,11 @@ import java.util.List;
 
 public class UserDaoImpl implements UserDao {
     private static final Logger logger = LogManager.getLogger();
+    private static final String loginField="login";
+    private static final String passwordField="password";
+    private static final String informationIdField="information_id";
+    private static final String idField="id";
+    private static final String roleIdField="role_id";
 
     private static final String SELECT_USER_ID_BY_LOGIN = "SELECT id FROM user WHERE login=? ;";
     private static final String CREATE_USER = "INSERT INTO user" +
@@ -36,10 +41,10 @@ public class UserDaoImpl implements UserDao {
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_ID)) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-            rs.next();//!!
-            String login = rs.getString("login");
-            String password = rs.getString("password");
-            int infId = rs.getInt("information_id");
+            rs.next();
+            String login = rs.getString(loginField);
+            String password = rs.getString(passwordField);
+            int infId = rs.getInt(informationIdField);
             user = new User(id, login, password, infId);
         } catch (SQLException e) {
             logger.error(e);
@@ -54,10 +59,10 @@ public class UserDaoImpl implements UserDao {
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_BY_INF_ID)) {
             preparedStatement.setInt(1, infId);
             ResultSet rs = preparedStatement.executeQuery();
-            rs.next();//!
-            String login = rs.getString("login");
-            String password = rs.getString("password");
-            int id = rs.getInt("id");
+            rs.next();
+            String login = rs.getString(loginField);
+            String password = rs.getString(passwordField);
+            int id = rs.getInt(idField);
             user = new User(id, login, password, infId);
         } catch (SQLException e) {
             logger.error(e);
@@ -72,10 +77,10 @@ public class UserDaoImpl implements UserDao {
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USERS)) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt("id");
-                int infId = rs.getInt("information_id");
-                String login = rs.getString("login");
-                String password = rs.getString("password");
+                int id = rs.getInt(idField);
+                int infId = rs.getInt(informationIdField);
+                String login = rs.getString(loginField);
+                String password = rs.getString(passwordField);
                 users.add(new User(id, login, password, infId));
             }
         } catch (SQLException e) {
@@ -114,7 +119,16 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User update(User user) {
-        return null;
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_USER_BY_ID)) {
+            statement.setString(1, user.getLogin());
+            statement.setString(2, user.getPassword());
+            statement.setInt(3, user.getId());
+            user=findEntityById(user.getId());
+        } catch (SQLException throwables) {
+            logger.error(throwables);
+        }
+        return user;
     }
 
     public boolean updateUser(User user) {
@@ -139,7 +153,7 @@ public class UserDaoImpl implements UserDao {
             statement.execute();
             ResultSet res = statement.getResultSet();
             res.next();
-            return (res.getInt("id"));
+            return (res.getInt(idField));
         } catch (SQLException throwables) {
             logger.error(throwables);
         }
@@ -154,7 +168,7 @@ public class UserDaoImpl implements UserDao {
             statement.setString(2, user.getPassword());
             statement.execute();
             ResultSet resultSet = statement.getResultSet();
-            if (resultSet.next()) return resultSet.getInt("id");
+            if (resultSet.next()) return resultSet.getInt(idField);
             else return -1;
         } catch (SQLException throwables) {
             logger.error(throwables);
@@ -171,7 +185,7 @@ public class UserDaoImpl implements UserDao {
             preparedStatement.execute();
             ResultSet res = preparedStatement.getResultSet();
             res.next();
-            return (res.getInt("role_id"));
+            return (res.getInt(roleIdField));
         } catch (SQLException throwables) {
             logger.error(throwables);
         }

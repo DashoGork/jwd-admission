@@ -10,7 +10,7 @@ public class Request extends BaseEntity {
 
     public Request(int userId) {
         super(-1);
-        this.userId=userId;
+        this.userId = userId;
     }
 
     public Request(int id, int facultyId, int userId, int score, int approved) {
@@ -21,14 +21,14 @@ public class Request extends BaseEntity {
         this.approved = approved;
     }
 
-    public Request( int facultyId, int userId, int score) {
+    public Request(int facultyId, int userId, int score) {
         super(-1);
         this.facultyId = facultyId;
         this.userId = userId;
         this.score = score;
     }
 
-    public Request( int facultyId, int score) {
+    public Request(int facultyId, int score) {
         super(-1);
         this.facultyId = facultyId;
         this.score = score;

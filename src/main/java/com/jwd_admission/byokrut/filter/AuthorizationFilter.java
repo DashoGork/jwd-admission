@@ -15,7 +15,7 @@ import java.util.Arrays;
 @WebFilter(urlPatterns = "/home/*")
 public class AuthorizationFilter implements Filter {
 
-    private String[] whiteList = {"show_main", "show_login", "show_registration", "login", "show_registration", "registration"};
+    private static final String[] whiteList = {"show_main", "show_login", "show_registration", "login", "show_registration", "registration", "language?id=ru", "language?id=en"};
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

@@ -37,7 +37,7 @@ public class AdminCalculateCommand implements Command {
 
     @Override
     public CommandResponse execute(CommandRequest request) {
-        String pathname="C:\\Users\\Юзер\\Documents\\GitHub\\jwd-admission\\src\\main\\java\\output\\passed.ser";
+        String pathname = "C:\\Users\\Юзер\\Documents\\GitHub\\jwd-admission\\src\\main\\java\\output\\passed.ser";
         List<Request> requestList = requestDao.findAllPassedInAllFacultets();
         List<User> userList = new ArrayList<>();
         for (Request userRequest : requestList) {
