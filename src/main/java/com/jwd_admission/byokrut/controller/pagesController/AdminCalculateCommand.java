@@ -7,11 +7,12 @@ import com.jwd_admission.byokrut.controller.Destination;
 import com.jwd_admission.byokrut.dao.impl.InformationDaoImpl;
 import com.jwd_admission.byokrut.dao.impl.RequestDaoImpl;
 import com.jwd_admission.byokrut.dao.impl.UserDaoImpl;
+import com.jwd_admission.byokrut.entity.FacultyName;
 import com.jwd_admission.byokrut.entity.Request;
 import com.jwd_admission.byokrut.entity.User;
+import com.jwd_admission.byokrut.util.OutputSerilizer;
 
 import javax.servlet.http.HttpSession;
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,30 +36,40 @@ public class AdminCalculateCommand implements Command {
 
     };
 
-    @Override
-    public CommandResponse execute(CommandRequest request) {
-        String pathname = "C:\\Users\\Юзер\\Documents\\GitHub\\jwd-admission\\src\\main\\java\\output\\passed.ser";
-        List<Request> requestList = requestDao.findAllPassedInAllFacultets();
+    private List<User> createUserListFromRequestList(List<Request> requestList){
         List<User> userList = new ArrayList<>();
         for (Request userRequest : requestList) {
             User user = userDao.findEntityById(userRequest.getUserId());
             User.copyAllNotNullFields(user, informationDao.findEntityById(user.getInfId()));
             userList.add(user);
         }
+        return userList;
+    }
 
-        File output = new File(pathname);
-        try (FileOutputStream outputStream = new FileOutputStream(output);
-             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)) {
-            if (!output.exists()) {
-                output.createNewFile();
-            }
-            objectOutputStream.writeObject(userList);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+    @Override
+    public CommandResponse execute(CommandRequest request) {
+        String pathnameToMmfFile = "C:\\Users\\Юзер\\Documents\\GitHub\\jwd-admission\\src\\main\\java\\output\\passedMMF.ser";
+        String pathnameToRfiktFile = "C:\\Users\\Юзер\\Documents\\GitHub\\jwd-admission\\src\\main\\java\\output\\passedRFIKT.ser";
+        String pathnameToFmoFile = "C:\\Users\\Юзер\\Documents\\GitHub\\jwd-admission\\src\\main\\java\\output\\passedFMO.ser";
+        String pathnameToBioFile = "C:\\Users\\Юзер\\Documents\\GitHub\\jwd-admission\\src\\main\\java\\output\\passedBio.ser";
+
+        List<User> userListFromMmf = createUserListFromRequestList(requestDao.findAllPassed(FacultyName.MMF));
+        List<User> userListFromRfikt = createUserListFromRequestList(requestDao.findAllPassed(FacultyName.RFIKT));
+        List<User> userListFromFmo = createUserListFromRequestList(requestDao.findAllPassed(FacultyName.FMO));
+        List<User> userListFromBio = createUserListFromRequestList(requestDao.findAllPassed(FacultyName.BIO));
+
+        OutputSerilizer.Serialize(userListFromMmf, pathnameToMmfFile);
+        OutputSerilizer.Serialize(userListFromFmo, pathnameToFmoFile);
+        OutputSerilizer.Serialize(userListFromRfikt, pathnameToRfiktFile);
+        OutputSerilizer.Serialize(userListFromBio, pathnameToBioFile);
 
         final HttpSession session = request.createSession();
-        session.setAttribute("listOfPassed", userList);
+        session.setAttribute("listOfPassedFromMMf", userListFromMmf);
+        session.setAttribute("listOfPassedFromRfikt", userListFromRfikt);
+        session.setAttribute("listOfPassedFromFmo", userListFromFmo);
+        session.setAttribute("listOfPassedFromBio", userListFromBio);
+
         return COMMAND_RESPONSE;
     }
 }

@@ -7,6 +7,6 @@ public interface UserDao extends BaseDao<Integer, User> {
     int findUserId(User user);
     int findUserByLoginAndPassword(User user);
     int findUserRoleId(User user);
-    boolean userExist(User user);
+
 }
 

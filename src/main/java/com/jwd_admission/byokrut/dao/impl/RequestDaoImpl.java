@@ -3,6 +3,7 @@ package com.jwd_admission.byokrut.dao.impl;
 import com.jwd_admission.byokrut.connection.ConnectionPool;
 import com.jwd_admission.byokrut.dao.RequestDao;
 import com.jwd_admission.byokrut.entity.Faculty;
+import com.jwd_admission.byokrut.entity.FacultyName;
 import com.jwd_admission.byokrut.entity.Request;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -75,17 +76,17 @@ public class RequestDaoImpl implements RequestDao {
     }
 
     @Override
-    public List<Request> findAllPassed(int facultyId) {
+    public List<Request> findAllPassed(FacultyName facultyName) {
         List<Request> requests = new ArrayList<>();
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_REQUESTS)) {
-            preparedStatement.setInt(1, facultyId);
-            preparedStatement.setInt(2, facultyDao.findEntityById(facultyId).getNumberOfStudents());
+            preparedStatement.setInt(1, facultyName.getId());
+            preparedStatement.setInt(2, facultyDao.findEntityById(facultyName.getId()).getNumberOfStudents());
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int userId = rs.getInt(userIdField);
                 int score = rs.getInt(scoreField);
-                requests.add(new Request(facultyId, userId, score));
+                requests.add(new Request(facultyName.getId(), userId, score));
             }
         } catch (SQLException e) {
             logger.error(e);
@@ -93,15 +94,15 @@ public class RequestDaoImpl implements RequestDao {
         return requests;
     }
 
-    @Override
-    public List<Request> findAllPassedInAllFacultets() {
-        List<Request> requests = new ArrayList<>();
-        List<Faculty> faculties = facultyDao.selectAllFacultiesId();
-        for (Faculty faculty : faculties) {
-            requests.addAll(findAllPassed(faculty.getId()));
-        }
-        return requests;
-    }
+//    @Override
+   public List<Request> findAllPassedInAllFacultets() {
+       List<Request> requests = new ArrayList<>();
+//        List<Faculty> faculties = facultyDao.selectAllFacultiesId();
+//        for (Faculty faculty : faculties) {
+//            requests.addAll(findAllPassed(faculty.getId()));
+//        }
+      return requests;
+  }
 
     @Override
     public boolean delete(Integer id) {

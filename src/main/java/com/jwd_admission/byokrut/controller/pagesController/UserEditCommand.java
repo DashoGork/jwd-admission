@@ -39,11 +39,11 @@ public class UserEditCommand implements Command {
         String name = request.getParameter("name");
         String middleNme = request.getParameter("middleName");
         String lastName = request.getParameter("lastName");
-        String score1 = request.getParameter("score_1");
-        String score2 = request.getParameter("score_2");
-        String score3 = request.getParameter("score_3");
-        String score4 = request.getParameter("score_4");
-        String faculty = request.getParameter("faculty");
+        int score1 = Integer.parseInt(request.getParameter("score_1"));
+        int score2 = Integer.parseInt(request.getParameter("score_2"));
+        int score3 = Integer.parseInt(request.getParameter("score_3"));
+        int score4 = Integer.parseInt(request.getParameter("score_4"));
+        int faculty = Integer.parseInt(request.getParameter("faculty"));
         String passportId = request.getParameter("passport_id");
         User user = userDao.findEntityById(id);
         user.setPassportId(passportId);
@@ -51,13 +51,10 @@ public class UserEditCommand implements Command {
         user.setLastName(lastName);
         user.setMiddleName(middleNme);
         user.setPassword(password);
-        Request request1 = new Request(Integer.parseInt(faculty), id, (Integer.parseInt(score1) + (Integer.parseInt(score2) +
-                (Integer.parseInt(score3) + (Integer.parseInt(score4))))));
+        Request request1 = new Request(faculty, id, (score1+score2+score3+score4));
         informationDao.update(user);
         userDao.updateUser(user);
-        ///ex
         requestDao.update(request1);
-
 
         return COMMAND_RESPONSE;
     }

@@ -192,8 +192,4 @@ public class UserDaoImpl implements UserDao {
         return -1;
     }
 
-    @Override
-    public boolean userExist(User user) {
-        return (findUserId(user) != -1);
-    }
 }

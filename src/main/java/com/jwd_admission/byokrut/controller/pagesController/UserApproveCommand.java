@@ -9,6 +9,7 @@ import com.jwd_admission.byokrut.dao.impl.RequestDaoImpl;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.jwd_admission.byokrut.controller.ServiceDestination.MAIN_PAGE;
 import static com.jwd_admission.byokrut.controller.ServiceDestination.PERSONAL_ACCOUNT_PAGE;
 import static com.jwd_admission.byokrut.controller.pagesController.MainServlet.COMMAND;
 
@@ -23,7 +24,7 @@ public class UserApproveCommand implements Command {
 
         @Override
         public Destination getDestination() {
-            return PERSONAL_ACCOUNT_PAGE;
+            return MAIN_PAGE;
         }
 
     };

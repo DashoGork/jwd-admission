@@ -7,6 +7,8 @@ import com.jwd_admission.byokrut.controller.Destination;
 import com.jwd_admission.byokrut.dao.impl.InformationDaoImpl;
 import com.jwd_admission.byokrut.dao.impl.RequestDaoImpl;
 import com.jwd_admission.byokrut.dao.impl.UserDaoImpl;
+import com.jwd_admission.byokrut.dao.impl.services.InformationDaoImplService;
+import com.jwd_admission.byokrut.dao.impl.services.UserDaoImpService;
 import com.jwd_admission.byokrut.entity.Request;
 import com.jwd_admission.byokrut.entity.User;
 
@@ -39,40 +41,30 @@ public class UserRegistrationCommand implements Command {
         String name = request.getParameter("name");
         String middleNme = request.getParameter("middleName");
         String lastName = request.getParameter("lastName");
-        String score1 = request.getParameter("score_1");
-        String score2 = request.getParameter("score_2");
-        String score3 = request.getParameter("score_3");
-        String score4 = request.getParameter("score_4");
-        String faculty = request.getParameter("faculty");
+        int score1 = Integer.parseInt(request.getParameter("score_1"));
+        int score2 = Integer.parseInt(request.getParameter("score_2"));
+        int score3 = Integer.parseInt(request.getParameter("score_3"));
+        int score4 = Integer.parseInt(request.getParameter("score_4"));
+        int faculty = Integer.parseInt(request.getParameter("faculty"));
         String passportId = request.getParameter("passport_id");
 
         User user = new User(login, password, name, middleNme, lastName, passportId);
-        Request request1 = new Request(Integer.parseInt(faculty), (Integer.parseInt(score1) + (Integer.parseInt(score2) +
-                (Integer.parseInt(score3) + (Integer.parseInt(score4))))));
+        Request request1 = new Request(faculty, score1 + score2 + score3 + score4);
 
-        if (!informationDao.userInfExist(user) & !userDao.userExist(user)) {
-            if (informationDao.create(user)) {
-                if (userDao.create(user)) {
-                    request1.setUserId(userDao.findUserId(user));
-                    if (requestDao.create(request1)) {
-                        final HttpSession session = request.createSession();
-                        session.setAttribute("login", user.getLogin());
-                        session.setAttribute("role", 2);
-
-                    } else {
-                        informationDao.delete(user.getInfId());
-                        userDao.delete(user.getId());
-                        //errorpage
-                    }
+        if (!InformationDaoImplService.userInfExist(user) & !UserDaoImpService.userExist(user)) {
+            if (informationDao.create(user) & userDao.create(user)) {
+                request1.setUserId(userDao.findUserId(user));
+                if (requestDao.create(request1)) {
+                    final HttpSession session = request.createSession();
+                    session.setAttribute("login", user.getLogin());
+                    session.setAttribute("role", 2);
                 } else {
                     informationDao.delete(user.getInfId());
-                    //!!!!!!
+                    userDao.delete(user.getId());
                 }
             } else {
-
+                informationDao.delete(user.getInfId());
             }
-        } else {
-
         }
         return COMMAND_RESPONSE;
     }

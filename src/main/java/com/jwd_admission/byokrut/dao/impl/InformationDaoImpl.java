@@ -133,8 +133,4 @@ public class InformationDaoImpl implements InformationDao {
         return -1;
     }
 
-    @Override
-    public boolean userInfExist(User user) {
-        return (findUserInformationIdByPassportId(user.getPassportId()) != -1);
-    }
 }

@@ -9,6 +9,7 @@ import com.jwd_admission.byokrut.dao.impl.RequestDaoImpl;
 import com.jwd_admission.byokrut.dao.impl.UserDaoImpl;
 import com.jwd_admission.byokrut.entity.User;
 
+import javax.servlet.http.HttpSession;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,6 +50,9 @@ public class UserDeleteCommand implements Command {
         requestDao.delete(id);
         userDao.delete(id);
         informationDao.delete(user.getInfId());
+        final HttpSession session = request.createSession();
+        session.removeAttribute("login");
+        session.removeAttribute("role");
 
         return COMMAND_RESPONSE;
     }
