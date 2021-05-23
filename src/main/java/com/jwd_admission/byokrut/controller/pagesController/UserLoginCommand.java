@@ -1,18 +1,22 @@
 package com.jwd_admission.byokrut.controller.pagesController;
 
+import com.jwd_admission.byokrut.connection.ConnectionPool;
 import com.jwd_admission.byokrut.controller.Command;
 import com.jwd_admission.byokrut.controller.CommandRequest;
 import com.jwd_admission.byokrut.controller.CommandResponse;
 import com.jwd_admission.byokrut.controller.Destination;
-import com.jwd_admission.byokrut.dao.impl.UserDaoImpl;
 import com.jwd_admission.byokrut.entity.User;
+import com.jwd_admission.byokrut.newDao.UserDao;
 
 import javax.servlet.http.HttpSession;
+
+import java.sql.Connection;
 
 import static com.jwd_admission.byokrut.controller.ServiceDestination.*;
 
 public class UserLoginCommand implements Command {
-    UserDaoImpl userDao = new UserDaoImpl();
+    private static Connection connection = ConnectionPool.INSTANCE.getConnection();
+    private static UserDao userDao = new UserDao(connection);
 
 
     public static final CommandResponse COMMAND_RESPONSE = new CommandResponse() {

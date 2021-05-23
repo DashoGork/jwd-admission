@@ -13,24 +13,17 @@ public class User extends BaseEntity implements Serializable {
     private String login;
     private String password;
     private int roleId;
-    private String firstName;
-    private String middleName;
-    private String lastName;
-    private String passportId;
-    private int infId;
+    private PersonalInformation personalInformation;
 
     public User() {
         super(-1);
     }
 
-    public User(String firstName, String middleName, String lastName, String passportId, int infId) {
-        super(-1);
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.passportId = passportId;
-        this.infId = infId;
+    public User(int id, PersonalInformation personalInformation) {
+        super(id);
+        this.personalInformation = personalInformation;
     }
+
 
     public User(int id, String login, String password) {
         super(id);
@@ -38,31 +31,19 @@ public class User extends BaseEntity implements Serializable {
         this.password = password;
     }
 
-    public User(int id, String login, String password, int infId) {
+    public User(int id, String login, String password, PersonalInformation personalInformation) {
         super(id);
         this.login = login;
         this.password = password;
-        this.infId = infId;
+        this.personalInformation = personalInformation;
     }
 
-    public User(int id, String login, String password, String firstName, String middleName, String lastName, String passportId) {
-        super(id);
-        this.login = login;
-        this.password = password;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.passportId = passportId;
+    public void setPersonalInformation(PersonalInformation personalInformation) {
+        this.personalInformation = personalInformation;
     }
 
-    public User(String login, String password, String firstName, String middleName, String lastName, String passportId) {
-        super(-1);
-        this.login = login;
-        this.password = password;
-        this.firstName = firstName;
-        this.middleName = middleName;
-        this.lastName = lastName;
-        this.passportId = passportId;
+    public PersonalInformation getPersonalInformation() {
+        return personalInformation;
     }
 
     public static void copyAllNotNullFields(User to, User from) {
@@ -100,41 +81,11 @@ public class User extends BaseEntity implements Serializable {
         return password;
     }
 
-    public String getPassportId() {
-        return passportId;
-    }
 
     public int getRoleId() {
         return roleId;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getMiddleName() {
-        return middleName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public int getInfId() {
-        return infId;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setPassportId(String passportId) {
-        this.passportId = passportId;
-    }
-
-    public void setInfId(int infId) {
-        this.infId = infId;
-    }
 
     @Override
     public void setId(int id) {
@@ -153,26 +104,18 @@ public class User extends BaseEntity implements Serializable {
         this.roleId = roleId;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return roleId == user.roleId && infId == user.infId && Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(firstName, user.firstName) && Objects.equals(middleName, user.middleName) && Objects.equals(lastName, user.lastName) && Objects.equals(passportId, user.passportId);
+        return roleId == user.roleId && Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(personalInformation, user.personalInformation);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, password, roleId, firstName, middleName, lastName, passportId, infId);
+        return Objects.hash(login, password, roleId, personalInformation);
     }
 
     @Override
@@ -181,11 +124,7 @@ public class User extends BaseEntity implements Serializable {
                 "login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", roleId=" + roleId +
-                ", firstName='" + firstName + '\'' +
-                ", middleName='" + middleName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", passportId='" + passportId + '\'' +
-                ", infId=" + infId +
+                ", personalInformation=" + personalInformation +
                 '}';
     }
 }

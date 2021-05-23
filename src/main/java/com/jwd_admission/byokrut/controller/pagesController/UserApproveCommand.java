@@ -1,20 +1,22 @@
 package com.jwd_admission.byokrut.controller.pagesController;
 
+import com.jwd_admission.byokrut.connection.ConnectionPool;
 import com.jwd_admission.byokrut.controller.Command;
 import com.jwd_admission.byokrut.controller.CommandRequest;
 import com.jwd_admission.byokrut.controller.CommandResponse;
 import com.jwd_admission.byokrut.controller.Destination;
-import com.jwd_admission.byokrut.dao.impl.RequestDaoImpl;
+import com.jwd_admission.byokrut.newDao.RequestDao;
 
+import java.sql.Connection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.jwd_admission.byokrut.controller.ServiceDestination.MAIN_PAGE;
-import static com.jwd_admission.byokrut.controller.ServiceDestination.PERSONAL_ACCOUNT_PAGE;
 import static com.jwd_admission.byokrut.controller.pagesController.MainServlet.COMMAND;
 
 public class UserApproveCommand implements Command {
-    RequestDaoImpl requestDao = new RequestDaoImpl();
+    private static Connection connection = ConnectionPool.INSTANCE.getConnection();
+    private static RequestDao requestDao = new RequestDao(connection);
 
     public static final CommandResponse COMMAND_RESPONSE = new CommandResponse() {
         @Override

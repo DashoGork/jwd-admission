@@ -73,6 +73,13 @@ body {
   width: 573px;
 }
 
+.button-calc {
+  margin-bottom: 30px;
+  position: relative;
+  left: 3%;
+  width: 400px;
+}
+
 .headline {
   display: flex;
   align-items: center;

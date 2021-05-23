@@ -23,22 +23,22 @@
             </tr>
             <tr>
                 <td><fmt:message key="registration.name"/>:</td>
-                <td><input type="text" name="name" placeholder="${user.firstName}" required></td>
+                <td><input type="text" name="name" placeholder="${user.getPersonalInformation().getFirstName()}" required></td>
             </tr>
             <tr>
                 <td><fmt:message key="registration.middlename"/>:</td>
                 <td><input type="text" name="middleName" id="middleName" value="${middleName}"
-                           placeholder="${user.middleName}" required/></td>
+                           placeholder="${user.getPersonalInformation().getMiddleName()}" required/></td>
             </tr>
             <tr>
                 <td><fmt:message key="registration.lastname"/>:</td>
-                <td><input type="text" name="lastName" id="lastName" value="${lastName}" placeholder="${user.lastName}"
+                <td><input type="text" name="lastName" id="lastName" value="${lastName}" placeholder="${user.getPersonalInformation().getLastName()}"
                            required></td>
             </tr>
             <tr>
                 <td><fmt:message key="registration.passportId"/>:</td>
                 <td><input type="text" name="passport_id" id="passport_id" value="${passportId}"
-                           placeholder="${user.passportId}" required></td>
+                           placeholder="${user.getPersonalInformation().getPassportId()}" required></td>
             </tr>
             <tr>
                 <td><fmt:message key="registration.faculty"/>:</td>

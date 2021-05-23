@@ -32,13 +32,8 @@ class FacultyDaoNewTest {
             given(resultSet.getString("name")).willReturn("ММФ");
             given(resultSet.getInt("number_of_students")).willReturn(45);
             Faculty faculty=facultyDaoNew.findEntityById(1);
-            System.out.println(faculty);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-
-
-
     }
 }

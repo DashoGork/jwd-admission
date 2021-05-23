@@ -1,27 +1,32 @@
 package com.jwd_admission.byokrut.controller.pagesController;
 
+import com.jwd_admission.byokrut.connection.ConnectionPool;
 import com.jwd_admission.byokrut.controller.Command;
 import com.jwd_admission.byokrut.controller.CommandRequest;
 import com.jwd_admission.byokrut.controller.CommandResponse;
 import com.jwd_admission.byokrut.controller.Destination;
-import com.jwd_admission.byokrut.dao.impl.FacultyDaoImpl;
-import com.jwd_admission.byokrut.dao.impl.InformationDaoImpl;
-import com.jwd_admission.byokrut.dao.impl.RequestDaoImpl;
-import com.jwd_admission.byokrut.dao.impl.UserDaoImpl;
+import com.jwd_admission.byokrut.entity.PersonalInformation;
 import com.jwd_admission.byokrut.entity.Request;
 import com.jwd_admission.byokrut.entity.User;
+import com.jwd_admission.byokrut.newDao.FacultyDao;
+import com.jwd_admission.byokrut.newDao.InformationDao;
+import com.jwd_admission.byokrut.newDao.RequestDao;
+import com.jwd_admission.byokrut.newDao.UserDao;
 
 import javax.servlet.http.HttpSession;
 
+import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.jwd_admission.byokrut.controller.ServiceDestination.PERSONAL_ACCOUNT_PAGE;
 
 public class ShowPersonalAccountCommand implements Command {
-    private UserDaoImpl userDao = new UserDaoImpl();
-    private RequestDaoImpl requestDao = new RequestDaoImpl();
-    private InformationDaoImpl informationDao = new InformationDaoImpl();
-    private FacultyDaoImpl facultyDao = new FacultyDaoImpl();
+    private static Connection connection = ConnectionPool.INSTANCE.getConnection();
+    private static UserDao userDao = new UserDao(connection);
+    private static InformationDao informationDao = new InformationDao(connection);
+    private static RequestDao requestDao = new RequestDao(connection);
+    private static FacultyDao facultyDao = new FacultyDao(connection);
 
 
     public static final CommandResponse COMMAND_RESPONSE = new CommandResponse() {
@@ -43,9 +48,12 @@ public class ShowPersonalAccountCommand implements Command {
         HttpSession session = request.createSession();
         int role = Integer.parseInt(String.valueOf(session.getAttribute("role")));
         if (role == 1) {
-            List<User> userList = informationDao.findAll();
-            for (User user : userList) {
-                User.copyAllNotNullFields(user, userDao.findUserByInfId(user.getInfId()));
+            List<PersonalInformation> personalInformationList = informationDao.findAll();
+            List<User> userList = new ArrayList<>();
+            for (PersonalInformation information : personalInformationList) {
+                User user = userDao.findUserByInfId(information.getId());
+                user.setPersonalInformation(information);
+                userList.add(user);
             }
             List<Request> userReq = requestDao.findAll();
             request.setAttribute("users", userList);
@@ -55,12 +63,9 @@ public class ShowPersonalAccountCommand implements Command {
             user.setRoleId(Integer.parseInt(String.valueOf(session.getAttribute("role"))));
             user.setLogin(session.getAttribute("login").toString());
             user.setId(userDao.findUserId(user));
-
-            User.copyAllNotNullFields(user, userDao.findEntityById(user.getId()));
-            User.copyAllNotNullFields(user, informationDao.findEntityById(user.getInfId()));
-
+            user = userDao.findEntityById(user.getId());
+            user.setPersonalInformation(informationDao.findEntityById(user.getPersonalInformation().getId()));
             Request userRequest = requestDao.findRequestByUser(user.getId());
-
             request.setAttribute("user", user);
             session.setAttribute("req", userRequest);
             request.setAttribute("faculty", facultyDao.findEntityById(userRequest.getFacultyId()));

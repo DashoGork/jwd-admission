@@ -1,14 +1,16 @@
 package com.jwd_admission.byokrut.controller.pagesController;
 
+import com.jwd_admission.byokrut.connection.ConnectionPool;
 import com.jwd_admission.byokrut.controller.Command;
 import com.jwd_admission.byokrut.controller.CommandRequest;
 import com.jwd_admission.byokrut.controller.CommandResponse;
-import com.jwd_admission.byokrut.dao.impl.InformationDaoImpl;
-import com.jwd_admission.byokrut.dao.impl.RequestDaoImpl;
-import com.jwd_admission.byokrut.dao.impl.UserDaoImpl;
 import com.jwd_admission.byokrut.entity.Request;
 import com.jwd_admission.byokrut.entity.User;
+import com.jwd_admission.byokrut.newDao.InformationDao;
+import com.jwd_admission.byokrut.newDao.RequestDao;
+import com.jwd_admission.byokrut.newDao.UserDao;
 
+import java.sql.Connection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,9 +19,10 @@ import static com.jwd_admission.byokrut.controller.pagesController.MainServlet.C
 import static com.jwd_admission.byokrut.controller.ServiceDestination.EDIT_PAGE;
 
 public class ShowEditPageCommand implements Command {
-    private UserDaoImpl userDao = new UserDaoImpl();
-    private InformationDaoImpl informationDao = new InformationDaoImpl();
-    private RequestDaoImpl requestDao = new RequestDaoImpl();
+    private static Connection connection= ConnectionPool.INSTANCE.getConnection();
+    private static UserDao userDao=new UserDao(connection);
+    private static InformationDao informationDao=new InformationDao(connection);
+    private static RequestDao requestDao=new RequestDao(connection);
 
     @Override
     public CommandResponse execute(CommandRequest request) {
@@ -31,7 +34,7 @@ public class ShowEditPageCommand implements Command {
         if (matcher.find()) {
             int id = Integer.parseInt(matcher.group().substring(3));
             User user = userDao.findEntityById(id);
-            User.copyAllNotNullFields(user, informationDao.findEntityById(user.getInfId()));
+            user.setPersonalInformation(informationDao.findEntityById(user.getPersonalInformation().getId()));
             Request userRequest = requestDao.findRequestByUser(user.getId());
             request.setAttribute("req", userRequest);
             request.setAttribute("user", user);

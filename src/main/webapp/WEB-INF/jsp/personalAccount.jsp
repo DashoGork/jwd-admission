@@ -35,6 +35,7 @@
             <div class="page-icon"></div>
             <h2>Admin's Page</h2>
         </div>
+        <a href="?command=calculate" class="button button-calc button-submit"><fmt:message key="personalAccount.Calculate"/></a>
         <div class="table-wrapper">
             <table class="table">
                 <thead>
@@ -61,11 +62,11 @@
                 <c:forEach var="user" items="${users}">
                 <tr>
                     <td>
-                        <div class="family">${user.lastName}</div>
+                        <div class="family">${user.getPersonalInformation().getLastName()}</div>
                     </td>
-                    <td>${user.firstName}</td>
-                    <td>${user.middleName}</td>
-                    <td>${user.passportId}</td>
+                    <td>${user.getPersonalInformation().getFirstName()}</td>
+                    <td>${user.getPersonalInformation().getMiddleName()}</td>
+                    <td>${user.getPersonalInformation().getPassportId()}</td>
                     <td>
                         <div class="group-buttons table-buttons">
                             <a href="?command=approve?id=${user.id}" class="button button-submit"><fmt:message
@@ -101,19 +102,19 @@
                 </div>
                 <div class="information-row">
                     <h4><fmt:message key="registration.name"/>: </h4>
-                    <p>${user.firstName}</p>
+                    <p>${user.getPersonalInformation().getFirstName()}</p>
                 </div>
                 <div class="information-row">
                     <h4><fmt:message key="registration.lastname"/>: </h4>
-                    <p>${user.lastName}</p>
+                    <p>${user.getPersonalInformation().getLastName()}</p>
                 </div>
                 <div class="information-row">
                     <h4><fmt:message key="registration.middlename"/>: </h4>
-                    <p>${user.middleName}</p>
+                    <p>${user.getPersonalInformation().getMiddleName()}</p>
                 </div>
                 <div class="information-row">
                     <h4><fmt:message key="registration.passportId"/>: </h4>
-                    <p>${user.passportId}</p>
+                    <p>${user.getPersonalInformation().getPassportId()}</p>
                 </div>
                 <div class="information-row">
                     <h4><fmt:message key="score"/>: </h4>

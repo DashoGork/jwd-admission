@@ -1,22 +1,27 @@
 package com.jwd_admission.byokrut.controller.pagesController;
 
+import com.jwd_admission.byokrut.connection.ConnectionPool;
 import com.jwd_admission.byokrut.controller.Command;
 import com.jwd_admission.byokrut.controller.CommandRequest;
 import com.jwd_admission.byokrut.controller.CommandResponse;
 import com.jwd_admission.byokrut.controller.Destination;
-import com.jwd_admission.byokrut.dao.impl.InformationDaoImpl;
-import com.jwd_admission.byokrut.dao.impl.RequestDaoImpl;
-import com.jwd_admission.byokrut.dao.impl.UserDaoImpl;
+import com.jwd_admission.byokrut.entity.PersonalInformation;
 import com.jwd_admission.byokrut.entity.Request;
 import com.jwd_admission.byokrut.entity.User;
+import com.jwd_admission.byokrut.newDao.InformationDao;
+import com.jwd_admission.byokrut.newDao.RequestDao;
+import com.jwd_admission.byokrut.newDao.UserDao;
 
+
+import java.sql.Connection;
 
 import static com.jwd_admission.byokrut.controller.ServiceDestination.MAIN_PAGE;
 
 public class UserEditCommand implements Command {
-    InformationDaoImpl informationDao = new InformationDaoImpl();
-    UserDaoImpl userDao = new UserDaoImpl();
-    RequestDaoImpl requestDao = new RequestDaoImpl();
+    private static Connection connection = ConnectionPool.INSTANCE.getConnection();
+    private static UserDao userDao = new UserDao(connection);
+    private static InformationDao informationDao = new InformationDao(connection);
+    private static RequestDao requestDao = new RequestDao(connection);
 
     public static final CommandResponse COMMAND_RESPONSE = new CommandResponse() {
         @Override
@@ -46,13 +51,11 @@ public class UserEditCommand implements Command {
         int faculty = Integer.parseInt(request.getParameter("faculty"));
         String passportId = request.getParameter("passport_id");
         User user = userDao.findEntityById(id);
-        user.setPassportId(passportId);
-        user.setFirstName(name);
-        user.setLastName(lastName);
-        user.setMiddleName(middleNme);
+        PersonalInformation personalInformation = new PersonalInformation(user.getPersonalInformation().getId(),name,middleNme,lastName,passportId);
         user.setPassword(password);
+        user.setPersonalInformation(personalInformation);
         Request request1 = new Request(faculty, id, (score1+score2+score3+score4));
-        informationDao.update(user);
+        informationDao.update(personalInformation);
         userDao.updateUser(user);
         requestDao.update(request1);
 

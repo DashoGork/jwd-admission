@@ -1,15 +1,17 @@
 package com.jwd_admission.byokrut.controller.pagesController;
 
+import com.jwd_admission.byokrut.connection.ConnectionPool;
 import com.jwd_admission.byokrut.controller.Command;
 import com.jwd_admission.byokrut.controller.CommandRequest;
 import com.jwd_admission.byokrut.controller.CommandResponse;
 import com.jwd_admission.byokrut.controller.Destination;
-import com.jwd_admission.byokrut.dao.impl.InformationDaoImpl;
-import com.jwd_admission.byokrut.dao.impl.RequestDaoImpl;
-import com.jwd_admission.byokrut.dao.impl.UserDaoImpl;
 import com.jwd_admission.byokrut.entity.User;
+import com.jwd_admission.byokrut.newDao.InformationDao;
+import com.jwd_admission.byokrut.newDao.RequestDao;
+import com.jwd_admission.byokrut.newDao.UserDao;
 
 import javax.servlet.http.HttpSession;
+import java.sql.Connection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,9 +19,10 @@ import static com.jwd_admission.byokrut.controller.ServiceDestination.MAIN_PAGE;
 import static com.jwd_admission.byokrut.controller.pagesController.MainServlet.COMMAND;
 
 public class UserDeleteCommand implements Command {
-    InformationDaoImpl informationDao = new InformationDaoImpl();
-    UserDaoImpl userDao = new UserDaoImpl();
-    RequestDaoImpl requestDao = new RequestDaoImpl();
+    private static Connection connection = ConnectionPool.INSTANCE.getConnection();
+    private static UserDao userDao = new UserDao(connection);
+    private static InformationDao informationDao = new InformationDao(connection);
+    private static RequestDao requestDao = new RequestDao(connection);
 
     public static final CommandResponse COMMAND_RESPONSE = new CommandResponse() {
         @Override
@@ -49,7 +52,7 @@ public class UserDeleteCommand implements Command {
         User user = userDao.findEntityById(id);
         requestDao.delete(id);
         userDao.delete(id);
-        informationDao.delete(user.getInfId());
+        informationDao.delete(user.getPersonalInformation().getId());
         final HttpSession session = request.createSession();
         session.removeAttribute("login");
         session.removeAttribute("role");

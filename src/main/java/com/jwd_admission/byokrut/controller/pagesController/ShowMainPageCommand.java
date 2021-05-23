@@ -1,21 +1,24 @@
 package com.jwd_admission.byokrut.controller.pagesController;
 
+import com.jwd_admission.byokrut.connection.ConnectionPool;
 import com.jwd_admission.byokrut.controller.Command;
 import com.jwd_admission.byokrut.controller.CommandRequest;
 import com.jwd_admission.byokrut.controller.CommandResponse;
-import com.jwd_admission.byokrut.dao.impl.FacultyDaoImpl;
 import com.jwd_admission.byokrut.entity.Faculty;
 import com.jwd_admission.byokrut.entity.User;
+import com.jwd_admission.byokrut.newDao.FacultyDao;
 import com.jwd_admission.byokrut.util.InputDeserializer;
 
 import javax.servlet.http.HttpSession;
 
+import java.sql.Connection;
 import java.util.List;
 
 import static com.jwd_admission.byokrut.controller.ServiceDestination.MAIN_PAGE;
 
 public class ShowMainPageCommand implements Command {
-    private FacultyDaoImpl facultyDao = new FacultyDaoImpl();
+    private static Connection connection = ConnectionPool.INSTANCE.getConnection();
+    private static FacultyDao facultyDao = new FacultyDao(connection);
 
     @Override
     public CommandResponse execute(CommandRequest request) {
@@ -33,7 +36,7 @@ public class ShowMainPageCommand implements Command {
         List<User> userListFromFmo = (List<User>) InputDeserializer.deserialize(pathnameToFmoFile);
         List<User> userListFromBio = (List<User>) InputDeserializer.deserialize(pathnameToBioFile);
 
-        if (userListFromMmf!=null) {
+        if (userListFromMmf != null) {
             session.setAttribute("calculated", true);
             session.setAttribute("listOfPassedFromMMf", userListFromMmf);
             session.setAttribute("listOfPassedFromRfikt", userListFromRfikt);

@@ -6,8 +6,12 @@
 <html>
 <head>
     <title>Home</title>
-    <style><%@include file="WEB-INF/css/style.css"%></style>
-    <style><%@include file="WEB-INF/css/normalize.css"%></style>
+    <style>
+        <%@include file="WEB-INF/css/style.css" %>
+    </style>
+    <style>
+        <%@include file="WEB-INF/css/normalize.css" %>
+    </style>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -20,7 +24,9 @@
         <div class="logo header__logo"></div>
     </a>
     <ul class="menu header__menu">
-        <li class="menu__item menu__item_current-page"><a class="link list-item__link_gray" href="?command=show_personal_account"><fmt:message key="main.PA"/></a>
+        <li class="menu__item menu__item_current-page"><a class="link list-item__link_gray"
+                                                          href="?command=show_personal_account"><fmt:message
+                key="main.PA"/></a>
         </li>
         <li class="reg-item">
             <ul class="menu ">
@@ -94,35 +100,35 @@
 
     <c:if test="${listOfPassedFromMMf!=null}">
         <div class="table-wrapper">
-        <table class="table">
-        <p><strong>MMF</strong></p>
-        <thead>
-        <tr>
-            <th class="table-head-item">
-                <div class="thead-title"><fmt:message key="registration.name"/></div>
-            </th>
-            <th class="table-head-item">
-                <div class="thead-title"><fmt:message key="registration.lastname"/></div>
-            </th>
-            <th class="table-head-item">
-                <div class="thead-title"><fmt:message key="registration.middlename"/></div>
-            </th>
-            <th class="table-head-item">
-                <div class="thead-title"><fmt:message key="registration.passportId"/></div>
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach var="user" items="${listOfPassedFromMMf}">
-            <tr>
-                <td><c:out value="${user.firstName}"/></td>
-                <td><c:out value="${user.lastName}"/></td>
-                <td><c:out value="${user.middleName}"/></td>
-                <td><c:out value="${user.passportId}"/></td>
-            </tr>
-        </c:forEach>
-        </tbody>
-        </table>
+            <table class="table">
+                <p><strong>MMF</strong></p>
+                <thead>
+                <tr>
+                    <th class="table-head-item">
+                        <div class="thead-title"><fmt:message key="registration.name"/></div>
+                    </th>
+                    <th class="table-head-item">
+                        <div class="thead-title"><fmt:message key="registration.lastname"/></div>
+                    </th>
+                    <th class="table-head-item">
+                        <div class="thead-title"><fmt:message key="registration.middlename"/></div>
+                    </th>
+                    <th class="table-head-item">
+                        <div class="thead-title"><fmt:message key="registration.passportId"/></div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="user" items="${listOfPassedFromMMf}">
+                    <tr>
+                        <td><c:out value="${user.getPersonalInformation().getFirstName()}"/></td>
+                        <td><c:out value="${user.getPersonalInformation().getLastName()}"/></td>
+                        <td><c:out value="${user.getPersonalInformation().getMiddleName()}"/></td>
+                        <td><c:out value="${user.getPersonalInformation().getPassportId()}"/></td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
         </div>
     </c:if>
 
@@ -149,10 +155,10 @@
                 <tbody>
                 <c:forEach var="user" items="${listOfPassedFromRfikt}">
                     <tr>
-                        <td><c:out value="${user.firstName}"/></td>
-                        <td><c:out value="${user.lastName}"/></td>
-                        <td><c:out value="${user.middleName}"/></td>
-                        <td><c:out value="${user.passportId}"/></td>
+                        <td><c:out value="${user.getPersonalInformation().getFirstName()}"/></td>
+                        <td><c:out value="${user.getPersonalInformation().getLastName()}"/></td>
+                        <td><c:out value="${user.getPersonalInformation().getMiddleName()}"/></td>
+                        <td><c:out value="${user.getPersonalInformation().getPassportId()}"/></td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -183,10 +189,10 @@
                 <tbody>
                 <c:forEach var="user" items="${listOfPassedFromFmo}">
                     <tr>
-                        <td><c:out value="${user.firstName}"/></td>
-                        <td><c:out value="${user.lastName}"/></td>
-                        <td><c:out value="${user.middleName}"/></td>
-                        <td><c:out value="${user.passportId}"/></td>
+                        <td><c:out value="${user.getPersonalInformation().getFirstName()}"/></td>
+                        <td><c:out value="${user.getPersonalInformation().getLastName()}"/></td>
+                        <td><c:out value="${user.getPersonalInformation().getMiddleName()}"/></td>
+                        <td><c:out value="${user.getPersonalInformation().getPassportId()}"/></td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -217,10 +223,10 @@
                 <tbody>
                 <c:forEach var="user" items="${listOfPassedFromBio}">
                     <tr>
-                        <td><c:out value="${user.firstName}"/></td>
-                        <td><c:out value="${user.lastName}"/></td>
-                        <td><c:out value="${user.middleName}"/></td>
-                        <td><c:out value="${user.passportId}"/></td>
+                        <td><c:out value="${user.getPersonalInformation().getFirstName()}"/></td>
+                        <td><c:out value="${user.getPersonalInformation().getLastName()}"/></td>
+                        <td><c:out value="${user.getPersonalInformation().getMiddleName()}"/></td>
+                        <td><c:out value="${user.getPersonalInformation().getPassportId()}"/></td>
                     </tr>
                 </c:forEach>
                 </tbody>

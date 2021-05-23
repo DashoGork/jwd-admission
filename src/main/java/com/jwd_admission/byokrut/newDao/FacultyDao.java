@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FacultyDao extends BaseDao<Integer,Faculty>{
+public class FacultyDao extends BaseDao<Integer, Faculty> {
     private static final Logger logger = LogManager.getLogger();
 
     private static final String SELECT_ALL_FACULTUES = "SELECT * FROM faculty";
@@ -30,7 +30,7 @@ public class FacultyDao extends BaseDao<Integer,Faculty>{
     @Override
     public Faculty findEntityById(Integer id) {
         Faculty faculty = new Faculty(id);
-        faculty.setSubjects(findSubjectInf(id));
+        faculty.setSubjects(findSubjectInfo(id));
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_FACULTY_BY_ID_FROM_FACULTY)) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
@@ -45,7 +45,7 @@ public class FacultyDao extends BaseDao<Integer,Faculty>{
         return faculty;
     }
 
-    private ArrayList<Subject> findSubjectInf(Integer facultyId) {
+    private ArrayList<Subject> findSubjectInfo(Integer facultyId) {
         ArrayList<Subject> subjects = new ArrayList<>(3);
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_SUBJECT_ID_NAME_BY_FACULTY_ID_FROM_FAC_SUB)) {
             preparedStatement.setInt(1, facultyId);
@@ -59,6 +59,20 @@ public class FacultyDao extends BaseDao<Integer,Faculty>{
             logger.error(e);
         }
         return subjects;
+    }
+
+    public List<Faculty> selectAllFacultiesId() {
+        List<Faculty> faculties = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_FACULTUES_ID)) {
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                faculties.add(new Faculty(id));
+            }
+        } catch (SQLException e) {
+            logger.error(e);
+        }
+        return faculties;
     }
 
     @Override
@@ -82,7 +96,7 @@ public class FacultyDao extends BaseDao<Integer,Faculty>{
     }
 
     @Override
-    public Faculty  update(Faculty faculty) {
+    public Faculty update(Faculty faculty) {
         return null;
     }
 
