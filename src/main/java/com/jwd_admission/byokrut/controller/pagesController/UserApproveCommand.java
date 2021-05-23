@@ -5,7 +5,7 @@ import com.jwd_admission.byokrut.controller.Command;
 import com.jwd_admission.byokrut.controller.CommandRequest;
 import com.jwd_admission.byokrut.controller.CommandResponse;
 import com.jwd_admission.byokrut.controller.Destination;
-import com.jwd_admission.byokrut.newDao.RequestDao;
+import com.jwd_admission.byokrut.dao.RequestDao;
 
 import java.sql.Connection;
 import java.util.regex.Matcher;

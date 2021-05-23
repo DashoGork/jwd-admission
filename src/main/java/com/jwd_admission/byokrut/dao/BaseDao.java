@@ -1,4 +1,4 @@
-package com.jwd_admission.byokrut.newDao;
+package com.jwd_admission.byokrut.dao;
 
 import com.jwd_admission.byokrut.entity.BaseEntity;
 

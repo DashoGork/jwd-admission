@@ -1,6 +1,5 @@
-package com.jwd_admission.byokrut.newDao;
+package com.jwd_admission.byokrut.dao;
 
-import com.jwd_admission.byokrut.connection.ConnectionPool;
 import com.jwd_admission.byokrut.entity.PersonalInformation;
 import com.jwd_admission.byokrut.entity.User;
 import org.apache.logging.log4j.LogManager;

@@ -8,11 +8,11 @@ import com.jwd_admission.byokrut.controller.Destination;
 import com.jwd_admission.byokrut.entity.PersonalInformation;
 import com.jwd_admission.byokrut.entity.Request;
 import com.jwd_admission.byokrut.entity.User;
-import com.jwd_admission.byokrut.newDao.InformationDao;
-import com.jwd_admission.byokrut.newDao.RequestDao;
-import com.jwd_admission.byokrut.newDao.UserDao;
-import com.jwd_admission.byokrut.newDao.services.InformationDaoService;
-import com.jwd_admission.byokrut.newDao.services.UserDaoService;
+import com.jwd_admission.byokrut.dao.InformationDao;
+import com.jwd_admission.byokrut.dao.RequestDao;
+import com.jwd_admission.byokrut.dao.UserDao;
+import com.jwd_admission.byokrut.dao.services.InformationDaoService;
+import com.jwd_admission.byokrut.dao.services.UserDaoService;
 
 import javax.servlet.http.HttpSession;
 

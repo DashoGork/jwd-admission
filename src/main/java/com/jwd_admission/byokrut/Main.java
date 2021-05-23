@@ -2,7 +2,7 @@ package com.jwd_admission.byokrut;
 
 import com.jwd_admission.byokrut.connection.ConnectionPool;
 import com.jwd_admission.byokrut.entity.Faculty;
-import com.jwd_admission.byokrut.newDao.FacultyDao;
+import com.jwd_admission.byokrut.dao.FacultyDao;
 
 import java.sql.Connection;
 import java.sql.SQLException;

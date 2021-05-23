@@ -6,9 +6,9 @@ import com.jwd_admission.byokrut.controller.CommandRequest;
 import com.jwd_admission.byokrut.controller.CommandResponse;
 import com.jwd_admission.byokrut.controller.Destination;
 import com.jwd_admission.byokrut.entity.User;
-import com.jwd_admission.byokrut.newDao.InformationDao;
-import com.jwd_admission.byokrut.newDao.RequestDao;
-import com.jwd_admission.byokrut.newDao.UserDao;
+import com.jwd_admission.byokrut.dao.InformationDao;
+import com.jwd_admission.byokrut.dao.RequestDao;
+import com.jwd_admission.byokrut.dao.UserDao;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Connection;

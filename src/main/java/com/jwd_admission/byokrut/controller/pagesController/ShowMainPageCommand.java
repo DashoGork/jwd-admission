@@ -6,7 +6,7 @@ import com.jwd_admission.byokrut.controller.CommandRequest;
 import com.jwd_admission.byokrut.controller.CommandResponse;
 import com.jwd_admission.byokrut.entity.Faculty;
 import com.jwd_admission.byokrut.entity.User;
-import com.jwd_admission.byokrut.newDao.FacultyDao;
+import com.jwd_admission.byokrut.dao.FacultyDao;
 import com.jwd_admission.byokrut.util.InputDeserializer;
 
 import javax.servlet.http.HttpSession;

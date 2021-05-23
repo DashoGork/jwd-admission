@@ -1,7 +1,7 @@
-package com.jwd_admission.byokrut.newDao.services;
+package com.jwd_admission.byokrut.dao.services;
 
 import com.jwd_admission.byokrut.entity.User;
-import com.jwd_admission.byokrut.newDao.InformationDao;
+import com.jwd_admission.byokrut.dao.InformationDao;
 
 import java.sql.Connection;
 
