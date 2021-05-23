@@ -43,7 +43,7 @@ public class FacultyDao extends BaseDao<Integer, Faculty> {
         return faculty;
     }
 
-    private ArrayList<Subject> findSubjectInfo(Integer facultyId) {
+    ArrayList<Subject> findSubjectInfo(Integer facultyId) {
         ArrayList<Subject> subjects = new ArrayList<>(3);
         try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_SUBJECT_ID_NAME_BY_FACULTY_ID_FROM_FAC_SUB)) {
             preparedStatement.setInt(1, facultyId);
@@ -57,20 +57,6 @@ public class FacultyDao extends BaseDao<Integer, Faculty> {
             logger.error(e);
         }
         return subjects;
-    }
-
-    public List<Faculty> selectAllFacultiesId() {
-        List<Faculty> faculties = new ArrayList<>();
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_FACULTUES_ID)) {
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                faculties.add(new Faculty(id));
-            }
-        } catch (SQLException e) {
-            logger.error(e);
-        }
-        return faculties;
     }
 
     @Override

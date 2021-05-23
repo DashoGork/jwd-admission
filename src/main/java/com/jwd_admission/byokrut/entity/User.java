@@ -1,10 +1,6 @@
 package com.jwd_admission.byokrut.entity;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.util.Objects;
 
 public class User extends BaseEntity implements Serializable {
@@ -44,28 +40,6 @@ public class User extends BaseEntity implements Serializable {
 
     public PersonalInformation getPersonalInformation() {
         return personalInformation;
-    }
-
-    public static void copyAllNotNullFields(User to, User from) {
-        try {
-            if (from.getId() != -1)
-                to.setId(from.getId());
-            for (Field field : from.getClass().getDeclaredFields()) {
-                field.setAccessible(true);
-                String name = field.getName();
-                Object value = field.get(from);
-                if (null != value & !name.equals("serialVersionUID")) {
-                    Field destField = to.getClass().getDeclaredField(name);
-                    destField.setAccessible(true);
-                    destField.set(to, value);
-                    destField.setAccessible(false);
-                }
-                field.setAccessible(false);
-            }
-        } catch (IllegalAccessException | NoSuchFieldException e) {
-            Logger logger = LogManager.getLogger();
-            logger.error(e);
-        } ///what if error has happened before .setAccessible(false)?
     }
 
     @Override
