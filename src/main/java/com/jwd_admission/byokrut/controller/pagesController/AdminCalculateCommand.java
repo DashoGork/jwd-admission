@@ -59,16 +59,17 @@ public class AdminCalculateCommand implements Command {
         List<User> userListFromFmo = createUserListFromRequestList(requestDao.findAllPassed(FacultyName.FMO));
         List<User> userListFromBio = createUserListFromRequestList(requestDao.findAllPassed(FacultyName.BIO));
 
-        OutputSerilizer.Serialize(userListFromMmf, pathnameToMmfFile);
-        OutputSerilizer.Serialize(userListFromFmo, pathnameToFmoFile);
-        OutputSerilizer.Serialize(userListFromRfikt, pathnameToRfiktFile);
-        OutputSerilizer.Serialize(userListFromBio, pathnameToBioFile);
+        OutputSerilizer.serialize(userListFromMmf, pathnameToMmfFile);
+        OutputSerilizer.serialize(userListFromFmo, pathnameToFmoFile);
+        OutputSerilizer.serialize(userListFromRfikt, pathnameToRfiktFile);
+        OutputSerilizer.serialize(userListFromBio, pathnameToBioFile);
 
         final HttpSession session = request.createSession();
         session.setAttribute("listOfPassedFromMMf", userListFromMmf);
         session.setAttribute("listOfPassedFromRfikt", userListFromRfikt);
         session.setAttribute("listOfPassedFromFmo", userListFromFmo);
         session.setAttribute("listOfPassedFromBio", userListFromBio);
+        session.setAttribute("calculated", true);
 
         return COMMAND_RESPONSE;
     }

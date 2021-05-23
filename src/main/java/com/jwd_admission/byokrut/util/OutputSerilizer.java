@@ -11,7 +11,7 @@ import java.io.ObjectOutputStream;
 public class OutputSerilizer {
     private static final Logger logger = LogManager.getLogger();
 
-    public static boolean Serialize(Object object, String path) {
+    public static boolean serialize(Object object, String path) {
         boolean result = false;
         File output = new File(path);
         try (FileOutputStream outputStream = new FileOutputStream(output);

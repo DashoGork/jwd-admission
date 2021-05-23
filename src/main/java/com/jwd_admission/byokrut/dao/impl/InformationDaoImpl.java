@@ -37,7 +37,7 @@ public class InformationDaoImpl implements InformationDao {
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_INF_BY_ID)) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-            rs.next();//!!
+            rs.next();
             String name = rs.getString(nameField);
             String middlename = rs.getString(middlenameField);
             String lastname = rs.getString(lastnameField);
@@ -132,5 +132,4 @@ public class InformationDaoImpl implements InformationDao {
         }
         return -1;
     }
-
 }

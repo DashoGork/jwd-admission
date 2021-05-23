@@ -34,6 +34,7 @@ public class ShowMainPageCommand implements Command {
         List<User> userListFromBio = (List<User>) InputDeserializer.deserialize(pathnameToBioFile);
 
         if (userListFromMmf!=null) {
+            session.setAttribute("calculated", true);
             session.setAttribute("listOfPassedFromMMf", userListFromMmf);
             session.setAttribute("listOfPassedFromRfikt", userListFromRfikt);
             session.setAttribute("listOfPassedFromFmo", userListFromFmo);
