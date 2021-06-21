@@ -1,12 +1,15 @@
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <fmt:setBundle basename="bundles\text"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <style><%@include file="../css/style.css"%></style>
-    <style><%@include file="../css/normalize.css"%></style>
+    <style>
+        <%@include file="../css/style.css" %>
+    </style>
+    <style>
+        <%@include file="../css/normalize.css" %>
+    </style>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -14,9 +17,7 @@
           rel="stylesheet">
     <title>PA</title>
 </head>
-
 <body class="theme-light">
-<h1 id="landing" class="visually-hidden">Online Zoo</h1>
 <header class="header">
     <a href="">
         <div class="logo header__logo"></div>
@@ -29,13 +30,18 @@
     </div>
 </header>
 <main class="main">
-
     <c:if test="${users!=null}">
         <div class="headline">
             <div class="page-icon"></div>
             <h2>Admin's Page</h2>
         </div>
-        <a href="?command=calculate" class="button button-calc button-submit"><fmt:message key="personalAccount.Calculate"/></a>
+<%--        tut--%>
+        <c:if test="${!calculated}">
+
+            <a href="?command=calculate" class="button button-calc button-submit"><fmt:message
+                    key="personalAccount.Calculate"/></a>
+        </c:if>
+        <%--        tut--%>
         <div class="table-wrapper">
             <table class="table">
                 <thead>
@@ -60,30 +66,29 @@
                 </thead>
                 <tbody>
                 <c:forEach var="user" items="${users}">
-                <tr>
-                    <td>
-                        <div class="family">${user.getPersonalInformation().getLastName()}</div>
-                    </td>
-                    <td>${user.getPersonalInformation().getFirstName()}</td>
-                    <td>${user.getPersonalInformation().getMiddleName()}</td>
-                    <td>${user.getPersonalInformation().getPassportId()}</td>
-                    <td>
-                        <div class="group-buttons table-buttons">
-                            <a href="?command=approve?id=${user.id}" class="button button-submit"><fmt:message
-                                    key="personalAccount.Approve"/></a>
-                            <a href="?command=delete?id=${user.id}" class="button button-delete"><fmt:message
-                                    key="personalAccount.Delete"/></a>
-                        </div>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>
+                            <div class="family">${user.getPersonalInformation().getLastName()}</div>
+                        </td>
+                        <td>${user.getPersonalInformation().getFirstName()}</td>
+                        <td>${user.getPersonalInformation().getMiddleName()}</td>
+                        <td>${user.getPersonalInformation().getPassportId()}</td>
+                        <td>
+                            <div class="group-buttons table-buttons">
+                                <c:if test="${!calculated}">
+                                <a href="?command=approve?id=${user.id}" class="button button-submit"><fmt:message
+                                        key="personalAccount.Approve"/></a>
+                                <a href="?command=delete?id=${user.id}" class="button button-delete"><fmt:message
+                                        key="personalAccount.Delete"/></a>
+                                </c:if>
+                            </div>
+                        </td>
+                    </tr>
                 </c:forEach>
                 </tbody>
-
             </table>
         </div>
     </c:if>
-
-
     <c:if test="${user!=null}">
         <div class="headline">
             <div class="page-icon"></div>
@@ -128,18 +133,21 @@
                             <fmt:message key="personalAccount.StatusApproved"/></c:if>
                     </p>
                 </div>
-
             </div>
             <div class="group-buttons card-buttons">
+
+                <c:if test="${!calculated}">
+                    <c:if test="${req.approved==0}">
                 <a href="?command=show_edit?id=${user.id}" class="button button-edit first-button"><fmt:message
                         key="personalAccount.Edit"/></a>
+                    </c:if>
                 <a href="?command=delete?id=${user.id}" class="button button-delete"><fmt:message
                         key="personalAccount.Delete"/></a>
+                </c:if>
             </div>
         </div>
     </c:if>
 </main>
-
 <footer class="footer">
     <div class="footer-container">
         <div class="footer__logo-section">

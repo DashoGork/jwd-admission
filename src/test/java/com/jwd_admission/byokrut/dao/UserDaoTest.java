@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
@@ -65,6 +67,32 @@ class UserDaoTest {
 
     @Test
     void findAll() {
+        List<User> usersExpected = new ArrayList<>();
+        usersExpected.add(new User(1,"login1","password1",new PersonalInformation(1)));
+        usersExpected.add(new User(2,"login2","password2",new PersonalInformation(2)));
+        try {
+            when(connection.prepareStatement("select * from user")).thenReturn(preparedStatement);
+            given(preparedStatement.executeQuery()).willReturn(resultSet);
+            assertNotNull(preparedStatement);
+            assertNotNull(resultSet);
+            resultSet.setFetchSize(2);
+            when(resultSet.next()).thenReturn(true);
+            given(resultSet.getString("login")).willReturn("login1");
+            given(resultSet.getString("password")).willReturn("password1");
+            given(resultSet.getInt("id")).willReturn(1);
+            given(resultSet.getInt("information_id")).willReturn(1);
+            when(resultSet.next()).thenReturn(true);
+            given(resultSet.getString("login")).willReturn("login2");
+            given(resultSet.getString("password")).willReturn("password2");
+            given(resultSet.getInt("id")).willReturn(2);
+            given(resultSet.getInt("information_id")).willReturn(2);
+            given(resultSet.next()).willReturn(false);
+
+            List<User> usersActual = userDao.findAll();
+            System.out.println(usersActual);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
     }
 

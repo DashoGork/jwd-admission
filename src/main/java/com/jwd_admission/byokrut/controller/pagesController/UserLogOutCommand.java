@@ -13,6 +13,10 @@ public class UserLogOutCommand implements Command {
     public CommandResponse execute(CommandRequest request) {
         final HttpSession session = request.createSession();
         session.removeAttribute("login");
+        session.removeAttribute("user");
+        session.removeAttribute("users");
+        session.removeAttribute("req");
+        session.removeAttribute("faculty");
         session.removeAttribute("role");
         return () -> MAIN_PAGE;
     }

@@ -17,6 +17,7 @@ import com.jwd_admission.byokrut.dao.services.UserDaoService;
 import javax.servlet.http.HttpSession;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import static com.jwd_admission.byokrut.controller.ServiceDestination.MAIN_PAGE;
 
@@ -52,25 +53,31 @@ public class UserRegistrationCommand implements Command {
         int score4 = Integer.parseInt(request.getParameter("score_4"));
         int faculty = Integer.parseInt(request.getParameter("faculty"));
         String passportId = request.getParameter("passport_id");
-        PersonalInformation personalInformation=new PersonalInformation(-1,name,middleNme,lastName,passportId);
-        User user = new User(-1,login, password);
+        PersonalInformation personalInformation = new PersonalInformation(-1, name, middleNme, lastName, passportId);
+        User user = new User(-1, login, password);
         user.setPersonalInformation(personalInformation);
         Request request1 = new Request(faculty, score1 + score2 + score3 + score4);
 
-        if (!InformationDaoService.userInfExist(user) & !UserDaoService.userExist(user)) {
-            if (informationDao.create(personalInformation) & userDao.create(user)) {
+        InformationDaoService informationDaoService = new InformationDaoService(connection);
+        if (!informationDaoService.userInfExist(user) && !UserDaoService.userExist(user)) {
+            synchronized (connection) {
+                boolean informationCreated = informationDao.create(personalInformation);
+                boolean userCreated = userDao.create(user);
                 request1.setUserId(userDao.findUserId(user));
-                if (requestDao.create(request1)) {
+                boolean requestCreated = requestDao.create(request1);
+                if (informationCreated && userCreated && requestCreated) {
                     final HttpSession session = request.createSession();
                     session.setAttribute("login", user.getLogin());
                     session.setAttribute("role", 2);
                 } else {
-                    informationDao.delete(user.getPersonalInformation().getId());
-                    userDao.delete(user.getId());
+                    try {
+                        connection.rollback();
+                    } catch (SQLException throwables) {
+
+                    }
                 }
-            } else {
-                informationDao.delete(user.getPersonalInformation().getId());
             }
+
         }
         return COMMAND_RESPONSE;
     }

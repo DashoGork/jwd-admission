@@ -18,22 +18,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
           rel="stylesheet">
 </head>
-<h1 id="landing" class="visually-hidden">Univercity</h1>
 <header class="header">
     <a href="">
         <div class="logo header__logo"></div>
     </a>
     <ul class="menu header__menu">
-        <li class="menu__item menu__item_current-page"><a class="link list-item__link_gray"
-                                                          href="?command=show_personal_account"><fmt:message
-                key="main.PA"/></a>
+        <li class="menu__item menu__item_current-page">
+            <a class="link list-item__link_gray" href="?command=show_personal_account">
+                <fmt:message key="main.PA"/></a>
         </li>
         <li class="reg-item">
             <ul class="menu ">
                 ${login}
                 <c:if test="${!calculated}">
+                    <c:if test="${role==null}">
                     <li class="menu__item"><a class="link list-item__link_gray" href="?command=show_registration">
-                        <fmt:message key="main.registration"/></a></li>
+                        <fmt:message key="main.registration"/></a></li></c:if>
                 </c:if>
                 <c:if test="${role==null}">
                     <li class="menu__item"><a class="link list-item__link_gray" href="?command=show_login"><fmt:message

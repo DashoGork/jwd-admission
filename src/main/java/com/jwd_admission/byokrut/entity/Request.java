@@ -1,5 +1,7 @@
 package com.jwd_admission.byokrut.entity;
 
+
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Request extends BaseEntity {
@@ -80,6 +82,15 @@ public class Request extends BaseEntity {
 
     public int getScore() {
         return score;
+    }
+
+    public static boolean findApprovementInArray(ArrayList<Request> array, int id){
+        for (Request request:array) {
+            if(request.getUserId()==id){
+                return request.getApproved()==1;
+            }
+        }
+        return false;
     }
 
     @Override

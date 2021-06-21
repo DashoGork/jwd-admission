@@ -53,11 +53,12 @@ public class ShowPersonalAccountCommand implements Command {
             for (PersonalInformation information : personalInformationList) {
                 User user = userDao.findUserByInfId(information.getId());
                 user.setPersonalInformation(information);
+                if(requestDao.findRequestByUser(user.getId()).getApproved()==0)
                 userList.add(user);
             }
             List<Request> userReq = requestDao.findAll();
-            request.setAttribute("users", userList);
-            request.setAttribute("req", userReq);
+            session.setAttribute("users", userList);
+            session.setAttribute("req", userReq);
         } else {
             User user = new User();
             user.setRoleId(Integer.parseInt(String.valueOf(session.getAttribute("role"))));
@@ -66,9 +67,9 @@ public class ShowPersonalAccountCommand implements Command {
             user = userDao.findEntityById(user.getId());
             user.setPersonalInformation(informationDao.findEntityById(user.getPersonalInformation().getId()));
             Request userRequest = requestDao.findRequestByUser(user.getId());
-            request.setAttribute("user", user);
+            session.setAttribute("user", user);
             session.setAttribute("req", userRequest);
-            request.setAttribute("faculty", facultyDao.findEntityById(userRequest.getFacultyId()));
+            session.setAttribute("faculty", facultyDao.findEntityById(userRequest.getFacultyId()));
         }
         return COMMAND_RESPONSE;
     }

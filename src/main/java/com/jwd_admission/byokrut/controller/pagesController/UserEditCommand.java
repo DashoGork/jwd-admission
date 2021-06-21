@@ -16,6 +16,7 @@ import com.jwd_admission.byokrut.dao.UserDao;
 import java.sql.Connection;
 
 import static com.jwd_admission.byokrut.controller.ServiceDestination.MAIN_PAGE;
+import static com.jwd_admission.byokrut.controller.ServiceDestination.PERSONAL_ACCOUNT_PAGE;
 
 public class UserEditCommand implements Command {
     private static Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -31,7 +32,7 @@ public class UserEditCommand implements Command {
 
         @Override
         public Destination getDestination() {
-            return MAIN_PAGE;
+            return PERSONAL_ACCOUNT_PAGE;
         }
 
     };

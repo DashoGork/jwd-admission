@@ -52,6 +52,7 @@ public class MainServlet extends HttpServlet {
         });
 
         if (execute.isRedirect()) {
+            command.execute((CommandRequest) new ShowPersonalAccountCommand());
             response.sendRedirect(execute.getDestination().getPath());
         } else {
             request.getRequestDispatcher(execute.getDestination().getPath()).forward(request, response);
@@ -94,7 +95,7 @@ public class MainServlet extends HttpServlet {
 
 
         if (execute.isRedirect()) {
-            resp.sendRedirect(execute.getDestination().getPath());
+            resp.sendRedirect(commandName);
         } else {
             req.getRequestDispatcher(execute.getDestination().getPath()).forward(req, resp);
         }
