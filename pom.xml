@@ -92,7 +92,7 @@
     </dependencies>
 
     <build>
-        <defaultGoal>install</defaultGoal>
+        <defaultGoal>compile</defaultGoal>
         <plugins>
 <!--            <plugin>-->
 <!--                <groupId>org.apache.maven.plugins</groupId>-->
