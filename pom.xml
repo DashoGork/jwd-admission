@@ -10,12 +10,13 @@
     <name>jwd-admission</name>
     <packaging>war</packaging>
 
+
     <properties>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <junit.version>5.7.0</junit.version>
     </properties>
-
 
 
     <dependencies>
@@ -25,7 +26,6 @@
             <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
-
 
 
         <!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
@@ -92,15 +92,8 @@
     </dependencies>
 
     <build>
-        <defaultGoal>compile</defaultGoal>
+    <defaultGoal>compile</defaultGoal>
         <plugins>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-war-plugin</artifactId>-->
-<!--                <version>3.3.0</version>-->
-<!--            </plugin>-->
-
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -109,7 +102,32 @@
                     <target>9</target>
                 </configuration>
             </plugin>
+
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-dependency-plugin</artifactId>-->
+            <!--                <version>3.2.0</version>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <phase>package</phase>-->
+            <!--                        <goals>-->
+            <!--                            <goal>copy</goal>-->
+            <!--                        </goals>-->
+            <!--                        <configuration>-->
+            <!--                            <artifactItems>-->
+            <!--                                <artifactItem>-->
+            <!--                                    <groupId>com.github.jsimone</groupId>-->
+            <!--                                    <artifactId>webapp-runner</artifactId>-->
+            <!--                                    <version>8.0.30.2</version>-->
+            <!--                                    <destFileName>webapp-runner.jar</destFileName>-->
+            <!--                                </artifactItem>-->
+            <!--                            </artifactItems>-->
+            <!--                        </configuration>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
         </plugins>
+
 
     </build>
 </project>
