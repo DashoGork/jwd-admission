@@ -59,7 +59,8 @@ public class UserRegistrationCommand implements Command {
         Request request1 = new Request(faculty, score1 + score2 + score3 + score4);
 
         InformationDaoService informationDaoService = new InformationDaoService(connection);
-        if (!informationDaoService.userInfExist(user) && !UserDaoService.userExist(user)) {
+        UserDaoService userDaoService=new UserDaoService(connection);
+        if (!informationDaoService.userInfExist(user) && !userDaoService.userExist(user)) {
             synchronized (connection) {
                 boolean informationCreated = informationDao.create(personalInformation);
                 boolean userCreated = userDao.create(user);

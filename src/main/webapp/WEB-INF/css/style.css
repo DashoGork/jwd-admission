@@ -64,7 +64,7 @@ body {
     font-size: 48px;
     line-height: 104px;
     margin-bottom: 40px;
-    color: var(--light-gray);
+    color: gray;
 }
 
 .text {
@@ -89,7 +89,7 @@ body {
 .logo {
     width: 167px;
     height: 64px;
-    background-image: url('../../assets/icons/logo.svg');
+    background-image: url('../jsp/logo.svg');
     background-position: center;
     background-repeat: no-repeat;
 }

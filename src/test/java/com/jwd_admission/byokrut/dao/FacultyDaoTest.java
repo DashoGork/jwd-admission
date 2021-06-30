@@ -33,37 +33,6 @@ class FacultyDaoTest {
     }
 
     @Test
-    void findEntityById() {
-
-
-//            Connection connection=mock(ProxyConnection.class);
-//            PreparedStatement preparedStatement=mock(PreparedStatement.class);
-//            ResultSet resultSet=mock(ResultSet.class);
-//            FacultyDao facultyDaoMock=mock(FacultyDao.class);
-//            FacultyDao facultyDaoNew=new FacultyDao(connection);
-//
-//            ArrayList<Subject> subjects=new ArrayList<>();
-//            subjects.add(new Subject(1,"name"));
-//            subjects.add(new Subject(2,"name"));
-//            subjects.add(new Subject(3,"name"));
-//            when(connection.prepareStatement("SELECT * FROM faculty WHERE id=?")).thenReturn(preparedStatement);
-//
-//            when(facultyDaoNew.findSubjectInfo(1)).thenReturn(subjects);
-//
-//            given(preparedStatement.executeQuery()).willReturn(resultSet);
-//
-//            assertNotNull(resultSet);
-//            given(resultSet.getString("name")).willReturn("ММФ");
-//            given(resultSet.getInt("number_of_students")).willReturn(45);
-//            Faculty faculty=facultyDaoNew.findEntityById(1);
-//            Faculty faculty1=new Faculty(1,45,"ММФ");
-//            assertEquals(faculty1,faculty);
-//        } catch (SQLException throwables) {
-//            throwables.printStackTrace();
-//        }
-    }
-
-    @Test
     void selectAllFacultiesId() {
         ArrayList<Faculty> expected=new ArrayList<>();
         expected.add(new Faculty(1));
