@@ -11,7 +11,7 @@
       
   <name>jwd-admission</name>
       
-  <packaging>war</packaging>
+  <packaging>pom</packaging>
       
   <properties>
             
