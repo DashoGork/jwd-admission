@@ -2,5 +2,5 @@ Manifest-Version: 1.0
 Created-By: IntelliJ IDEA
 Built-By: Юзер
 Build-Jdk: 15.0.1
-
+Main-Class: com.jwd_admission.byokrut.Main
 
