@@ -214,10 +214,4 @@
     </plugins>
         
   </build>
-  
-  <modules>
-      
-    <module>1</module>
-      
-  </modules>
 </project>
