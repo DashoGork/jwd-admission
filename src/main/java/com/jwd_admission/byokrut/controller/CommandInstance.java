@@ -24,11 +24,16 @@ public enum CommandInstance {
     }
 
     static Command commandOf(String commandName) {
-        for (CommandInstance value : values()) {
-            if (value.name().equalsIgnoreCase(commandName)) {
-                return value.command;
+        try {
+            for (CommandInstance value : values()) {
+                if (value.name().equalsIgnoreCase(commandName)) {
+                    return value.command;
+                }
             }
+        }catch (Exception e){
+            System.out.println(e.getCause());
         }
+
         return SHOW_MAIN.command;
     }
 }

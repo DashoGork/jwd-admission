@@ -1,6 +1,5 @@
 package com.jwd_admission.byokrut.util;
 
-import com.jwd_admission.byokrut.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
